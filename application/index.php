@@ -2,15 +2,46 @@
 
 session_start();
 
+session_destroy();
 include ("../config/config.inc.php");
 
-$strHost = $_POST["host"];
-$strUser = $_POST"user";
-$strPass = "pass";
-$strDatabase = "database";
+if (isset($_POST))
+{
+	$strHost     = @$_POST['txtHost'];
+	$strUser     = @$_POST["txtUser"];
+	$strPass     = @$_POST["txtPass"];
+	$strDatabase = @$_POST["txtDatabase"];
 
-echo $strHost;
+	$_SESSION["host"]     = $strHost;
+	$_SESSION["user"]     = $strUser;
+	$_SESSION["pass"]     = $strPass;
+	$_SESSION["database"] = $strDatabase;
 
+	session_write_close();
+}
+	echo $_SESSION["host"];
+//	if (!$strHost)
+//	{
+//		echo "";
+//
+//	}
+//	else
+//	{
+//
+//		$connect = mysql_connect($strHost, $strUser, $strPass) or die ("ไม่สามารถเชื่อมต่อฐานข้อมูลได้");
+//		mysql_select_db($database) or die ("ไม่พบฐานข้อมูล $strDatabase");
+//		mysql_query("SET character_set_results=tis-620");
+//		mysql_query("SET NAMES TIS620");
+//
+//	$_SESSION["host"] = $strHost;
+//	$_SESSION["user"] = $strUser;
+//	$_SESSION["pass"] = $strPass;
+//	$_SESSION["database"] = $strDatabase;
+//	session_write_close();
+//
+//		header("location:test.php");
+//	}
+//}
 ?>
 
 <!DOCTYPE html>
@@ -40,26 +71,26 @@ echo $strHost;
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Host</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="host" placeholder="192.168.xx.xxx">
+                <input type="text" class="form-control" id="txtHost" name="txtHost" placeholder="192.168.xx.xxx">
                 <button type="submit" class="btn btn-default">Test config</button>
             </div>
         </div>
         <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Username</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="user">
+                <input type="text" class="form-control" id="txtUser" name="txtUser">
             </div>
         </div>
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="pass">
+                <input type="text" class="form-control" id="txtPass" name="txtPass">
             </div>
         </div>
         <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Data Base</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="database">
+                <input type="text" class="form-control" id="txtDatabase" name="txtDatabase">
             </div>
         </div>
         <div class="form-group">
