@@ -1,0 +1,93 @@
+.notifications{
+    font: 15pt 'THSarabunNew', sans-serif;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.notifications .uiHeader{
+    margin: 0;
+}
+
+.notifications .uiHeader hr{
+    margin-top: 10px;
+    margin-bottom: 0;
+    border-color: #da5186;
+}
+
+.notifications .uiHeader h3{
+    font-weight: 700;
+    font-size: 20pt;
+}
+
+.notifications .uiBody{
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+    background: white;
+    position: relative;
+}
+
+.notifications .uiBody li .message {
+    width: 100%;
+    display: inline-block;
+    padding: 3px;
+    text-decoration: none;
+    color: #5e5e5e;
+    border-bottom: 1px solid rgba(255, 119, 178, 0.43);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+}
+
+.notifications .uiBody li .message .content{
+    vertical-align: super;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.notifications .uiBody li .message .content .subject{
+    font-weight: bold;
+    display: inline-block;
+}
+
+.notifications .uiBody li .message .content .detail{
+    display: inline-block;
+}
+
+.notifications .uiBody li .message .icon-notice{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+
+}
+
+.notifications .uiBody .end .message  {
+    position: relative;
+    font-weight: 700;
+    text-align: center;
+}
+
+.notifications .uiBody li .message .icon-notice img{
+    width: 32px;
+    position: relative;
+    margin-right: 8px;
+    padding: 0;
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+
+.notifications .uiFooter{
+    margin: 0;
+}
+.notifications .uiFooter hr{
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-color: #da5186;
+}
