@@ -7,7 +7,7 @@
 	src: url('../../common/font/THSarabunNew%20Bold.ttf');
 }
 BODY {
-	font-family:THSarabunNew;
+	font-family:THSarabunNew !important;
 	font-weight: normal;
 	FONT-SIZE: 17pt;
 	margin-left: 0px;

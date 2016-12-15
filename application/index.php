@@ -22,60 +22,64 @@ echo $strHost;
 <meta name="description" content="">
 <meta name="author" content="">
 <title>Tool comment</title>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/style_menu.css">
-<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../../common/sweetalert/dist/sweetalert.css">
-<link rel="stylesheet" href="../package/jquery-ui/jquery-ui.css">
-<link rel="stylesheet" href="../../common/global/css/dashboard_style.css">
+<link rel="stylesheet" href="../common/css/style.css">
+<link rel="stylesheet" href="../common/css/style_menu.css">
+<link rel="stylesheet" href="../common/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../common/font/fontawesome-webfont.eot">
+<link rel="stylesheet" href="../common/css/style_tool.css">
 
-<script src="../../common/js/jquery1.12.4.js" type="text/javascript"></script>
-<script src="../../common/sweetalert/dist/sweetalert.min.js"></script>
-<script src="../fancybox/jquery.mousewheel-3.0.4.pack.js" type="text/javascript"></script>
-<script src="../../common/bootstrap/js/bootstrap.min.js" type="text/javascript"> </script>
-<script src="../../common/js_script/jquery-1.8.2.js" type="text/javascript"> </script>
-<script src="../package/jquery-ui/jquery-ui-thai.js" type="text/javascript"></script>
-<script src="../../common/js/purl.js"></script>
+<script src="../common/js/jquery1.12.4.js" type="text/javascript"></script>
+<script src="../common/bootstrap/js/bootstrap.min.js" type="text/javascript"> </script>
+<script src="../common/js/purl.js"></script>
+
 
 </head>
+<style>
+    *{
+        font-family: 'THSarabunNew', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
 
+</style>
 <body>
-<!-- Page Content -->
-<div class="container">
-    <form class="form-horizontal">
-        <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Host</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="host" placeholder="192.168.xx.xxx">
-                <button type="submit" class="btn btn-default">Test config</button>
+
+<div class="text-center" style="padding:50px 0">
+    <h1 style="font-weight: bold; font-size: 30px" >ค้นหาคอมเม้น</h1>
+    <!-- Main Form -->
+    <div class="login-form-1">
+        <form id="login-form" class="text-left">
+            <div class="main-login-form">
+                <div class="login-group">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <label for="host" class="sr-only">Host</label>
+                                <input type="text" class="form-control" id="host" name="host" placeholder="host">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-primary">Test Host</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lg_username" class="sr-only">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="lg_password" class="sr-only">Password</label>
+                        <input type="text" class="form-control" id="password" name="password" placeholder="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="database" class="sr-only">DataBase</label>
+                        <input type="text" class="form-control" id="database" name="database" placeholder="database">
+                    </div>
+                    <button type="button" class="btn btn-success">Next >></button>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Username</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="user">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="pass">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Data Base</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="database">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">NEXT >></button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
+    <!-- end:Main Form -->
 </div>
-<!-- /.container -->
+
 </body>
 
 </html>
