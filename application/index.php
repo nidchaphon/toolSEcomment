@@ -15,7 +15,7 @@ echo $strHost;
 
 <!DOCTYPE html>
 <html lang="th">
-
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=tis-620">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,12 +34,6 @@ echo $strHost;
 
 
 </head>
-<style>
-    *{
-        font-family: 'THSarabunNew', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-
-</style>
 <body>
 
 <div class="text-center" style="padding:50px 0">
