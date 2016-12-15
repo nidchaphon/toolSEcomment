@@ -5,7 +5,7 @@ session_start();
 include ("../config/config.inc.php");
 
 $strHost = $_POST["host"];
-$strUser = $_POST"user";
+$strUser = $_POST["user"];
 $strPass = "pass";
 $strDatabase = "database";
 
@@ -16,27 +16,33 @@ echo $strHost;
 <!DOCTYPE html>
 <html lang="th">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=tis-620">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Tool comment</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/style_menu.css">
+<link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../common/sweetalert/dist/sweetalert.css">
+<link rel="stylesheet" href="../package/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" href="../../common/global/css/dashboard_style.css">
 
-    <title>Tool Comment</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="../../common/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Core JS -->
-    <script src="../../common/js/jquery.js"></script>
-    <script src="../../common/js/bootstrap.min.js"></script>
+<script src="../../common/js/jquery1.12.4.js" type="text/javascript"></script>
+<script src="../../common/sweetalert/dist/sweetalert.min.js"></script>
+<script src="../fancybox/jquery.mousewheel-3.0.4.pack.js" type="text/javascript"></script>
+<script src="../../common/bootstrap/js/bootstrap.min.js" type="text/javascript"> </script>
+<script src="../../common/js_script/jquery-1.8.2.js" type="text/javascript"> </script>
+<script src="../package/jquery-ui/jquery-ui-thai.js" type="text/javascript"></script>
+<script src="../../common/js/purl.js"></script>
 
 </head>
 
 <body>
 <!-- Page Content -->
 <div class="container">
-    <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+    <form class="form-horizontal">
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Host</label>
             <div class="col-sm-10">
@@ -73,4 +79,3 @@ echo $strHost;
 </body>
 
 </html>
-
