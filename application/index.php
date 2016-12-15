@@ -50,15 +50,8 @@ echo $strHost;
             <div class="main-login-form">
                 <div class="login-group">
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <label for="host" class="sr-only">Host</label>
-                                <input type="text" class="form-control" id="host" name="host" placeholder="host">
-                            </div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-primary">Test Host</button>
-                            </div>
-                        </div>
+                        <label for="host" class="sr-only">Host</label>
+                        <input type="text" class="form-control" id="host" name="host" placeholder="host">
                     </div>
                     <div class="form-group">
                         <label for="lg_username" class="sr-only">Username</label>
@@ -72,7 +65,10 @@ echo $strHost;
                         <label for="database" class="sr-only">DataBase</label>
                         <input type="text" class="form-control" id="database" name="database" placeholder="database">
                     </div>
-                    <button type="button" class="btn btn-success">Next >></button>
+                    <div class="form-group" style="text-align: center; margin-top: 20px;">
+                        <button type="button" class="btn btn-primary" style="width: 30%; font-size: 20px;">Test Host</button>
+                        <button type="button" class="btn btn-success" style="width: 30%; font-size: 20px;">Next >></button>
+                    </div>
                 </div>
             </div>
         </form>
