@@ -1,14 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: crystal
- * Date: 15/12/2559
- * Time: 11:16
- */
+
+session_start();
+
+include ("../config/config.inc.php");
+
+$strHost = $_POST["host"];
+$strUser = $_POST"user";
+$strPass = "pass";
+$strDatabase = "database";
+
+echo $strHost;
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 
 <head>
 
@@ -31,7 +37,7 @@
 <body>
 <!-- Page Content -->
 <div class="container">
-    <form class="form-horizontal">
+    <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Host</label>
             <div class="col-sm-10">
