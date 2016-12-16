@@ -47,54 +47,52 @@ $list = $detail_list->getDetailList($_SESSION); // ข้อมูลตาราง
     }
 </style>
 
-    <script>
-        $(document).ready(function() {
-            $('#dataTables-example').DataTable({
-                responsive: true
-            });
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
         });
-    </script>
+    });
+</script>
 
-    <div class="row" style="margin: 15px;">
-        <div class="col-lg-12" style="padding: 0 0 0 0;">
-            <div class="panel panel-default">
-                <div class="panel-heading" style="font-size: 24px; text-align: center; font-weight: bold">
-                    Data Tables
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example"
-                    style="width: 80%; margin: auto;">
-                        <thead>
-                        <tr>
-                            <th style="width: 30%">ฐานข้อมูล</th>
-                            <th style="width: 30%">ตาราง</th>
-                            <th style="width: 10%">เลือก</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        foreach ($list as $val){
-                            ?>
+<div class="row" style="margin: 15px;">
+    <div class="col-lg-12" style="padding: 0 0 0 0;">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="font-size: 24px; text-align: center; font-weight: bold">
+                Data Tables
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example"
+                       style="width: 80%; margin: auto;">
+                    <thead>
+                    <tr>
+                        <th style="width: 30%">ฐานข้อมูล</th>
+                        <th style="width: 30%">ตาราง</th>
+                        <th style="width: 40%">คอมเม้น</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($list as $val){
+                        ?>
                         <tr class="odd gradeX">
                             <td style="vertical-align: middle;"><?php echo $val['TABLE_SCHEMA'] ?></td>
                             <td style="vertical-align: middle;"><?php echo $val['TABLE_NAME'] ?></td>
-                            <td style="vertical-align: middle;" align="center">
-                                <input type="checkbox" id="inlineCheckbox" value="option">
-                            </td>
+                            <td style="vertical-align: middle;"><?php echo $val['TABLE_COMMENT'] ?></td>
                         </tr>
-                            <?php
-                        }
-                        ?>
-                        </tbody>
-                    </table>
-                    <!-- /.table-responsive -->
-                </div>
-                <!-- /.panel-body -->
+                        <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+                <!-- /.table-responsive -->
             </div>
-            <!-- /.panel -->
+            <!-- /.panel-body -->
         </div>
-        <!-- /.col-lg-12 -->
+        <!-- /.panel -->
     </div>
+    <!-- /.col-lg-12 -->
+</div>
 </body>
 </html>

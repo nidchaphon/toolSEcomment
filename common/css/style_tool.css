@@ -1,39 +1,47 @@
-
 @media (max-width: 768px) {
     .login-form-1 {
         width: 100%;
     }
-    table{
-        width: 100%;
+    table, input.search{
+        width: 100% !important;
     }
 }
 @media (min-width: 992px) {
     .login-form-1 {
         width: 50%;
     }
-    table{
-        width: 80%;
+    table, input.search{
+        width: 80% !important;
     }
 }
 @media (min-width: 1200px) {
     .login-form-1 {
         width: 30%;
     }
-    table{
-        width: 50%;
+    table, input.search{
+        width: 80% !important;
     }
 }
+/**************************************** style หน้า table_detail *******************************************/
 
+.table-hover>tbody>tr:hover{
+    background-color: #ebfbff !important;
+}
+
+thead>tr>td{
+    font-weight: bold;
+}
+/************************************* style หน้า indek *********************************************************/
 /*=== 1. General Structure ===*/
 html,
 body {
-    background: #efefef;
-    padding: 10px;
+    background: #eeeeee;
 }
 /*=== 2. Anchor Link ===*/
 a {
     color: #aaaaaa;
     transition: all ease-in-out 200ms;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 a:hover {
     color: #333333;
