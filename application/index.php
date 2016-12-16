@@ -5,9 +5,6 @@ ini_set('display_errors', 0);
 
 session_start();
 
-//session_destroy();
-//include ("../config/config.inc.php");
-
 $strHost = $_POST['txtHost'];
 $strUser = $_POST['txtUsername'];
 $strPass = $_POST['txtPassword'];
