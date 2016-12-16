@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 include ("../config/config.inc.php");
 
 // ดึงข้อมูลหน้าหลัก
@@ -36,7 +37,7 @@ $detail_list = new detail();
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
 <?php
-$list = $detail_list->getDetailList($_SESSION); // ข้อมูลตาราง
+$list = $detail_list->getDetailList($_SESSION["Shost"], $_SESSION["Suser"], $_SESSION["Spass"], $_SESSION["Sdatabase"]); // ข้อมูลตาราง
 //echo '<pre>';print_r($list);echo '</pre>';
 ?>
 <body>

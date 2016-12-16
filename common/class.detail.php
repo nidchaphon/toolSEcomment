@@ -2,16 +2,13 @@
 
 class detail
 {
-    function getDetailList($id){
+    function getDetailList(){
         $result = array();
         $strQuery = "
             SELECT
-                information_schema.`TABLES`.TABLE_SCHEMA,
-                information_schema.`TABLES`.TABLE_NAME,
-                information_schema.`TABLES`.TABLE_COMMENT
+                *
             FROM
-              information_schema.`TABLES`
-            ORDER BY `TABLES`.TABLE_NAME
+              information_schema
         ";
         if($_GET['debug']=='on'){
             echo 'คิวรี่ getDetailList รายชื่อตารางในฐานข้อมูล';
