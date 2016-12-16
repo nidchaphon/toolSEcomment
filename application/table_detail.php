@@ -1,6 +1,16 @@
 <?php
 session_start();
 
+echo $_SESSION["Shost"];
+echo $_SESSION["Suser"];
+echo $_SESSION["Spass"];
+echo $_SESSION["Sdatabase"];
+
+$host =  $_SESSION["Shost"];
+$user = $_SESSION["Suser"];
+$pass = $_SESSION["Spass"];
+$database = $_SESSION["Sdatabase"];
+
 include ("../config/config.inc.php");
 
 // ดึงข้อมูลหน้าหลัก
@@ -36,7 +46,7 @@ $detail_list = new detail();
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
 <?php
-$list = $detail_list->getDetailList($_SESSION); // ข้อมูลตาราง
+$list = $detail_list->getDetailList($database); // ข้อมูลตาราง
 //echo '<pre>';print_r($list);echo '</pre>';
 ?>
 <body>
