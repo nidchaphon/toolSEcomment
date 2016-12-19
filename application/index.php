@@ -8,64 +8,7 @@ session_start();
 //session_destroy();
 //include ("../config/config.inc.php");
 
-$strHost = $_POST['txtHost'];
-$strUser = $_POST['txtUsername'];
-$strPass = $_POST['txtPassword'];
-$strDatabase = $_POST['txtDatabase'];
-
-$_SESSION['Shost'] = $strHost;
-$_SESSION['Suser'] = $strUser;
-$_SESSION['Spass'] = $strPass;
-$_SESSION['Sdatabase'] = $strDatabase;
-session_write_close();
-
-$connect = mysql_connect($strHost,$strUser,$strPass);
-$select_db = mysql_select_db($strDatabase,$connect);
-
-if (isset($_POST['btNext'])) {
-    if ($connect && $select_db) {
-        $frmAction = $_SERVER['PHP_SELF'];
-        header("location:table_detail.php");
-    } else {
-        $frmAction = "testdb.php";
-        $iframe = "frmMain.target='iframe_target';";
-    }
-}
-
 ?>
-
-<script language="JavaScript">
-    function showResult(statustestdb)
-    {
-        if (statustestdb==1)
-        {
-            document.getElementById("divResult").innerHTML = "<font color=green> เชื่อมต่อฐานข้อมูลสำเร็จ! </font>  <br>";
-        }
-        if (statustestdb==2)
-        {
-            document.getElementById("divResult").innerHTML = "<font color=red> ผิดพลาด!! ไม่สามารถเชื่อมต่อฐานข้อมูลได้ </font> <br>";
-        }
-        if (statustestdb==3)
-        {
-            document.getElementById("divResult").innerHTML = "<font color=red> ผิดพลาด!! กรุณากรอกข้อมูลให้ครบ </font> <br>";
-        }
-
-    }
-
-    function fncBTTest()
-    {
-        frmMain.action='testdb.php'
-        frmMain.target='iframe_target';
-        frmMain.submit();
-    }
-
-    function fncBTNext()
-    {
-        frmMain.action='<?php echo $frmAction; ?>'
-        <?php echo $iframe; ?>
-        frmMain.submit();
-    }
-</script>
 
 <!DOCTYPE html>
 <html lang="th">
@@ -94,33 +37,34 @@ if (isset($_POST['btNext'])) {
 <body>
 
 <div class="text-center" style="padding:50px 0">
-    <h1 style="font-weight: bold; font-size: 30px !important;" >ค้นหาคอมเม้น</h1>
+    <h1 style="font-weight: bold; font-size: 30px" >ค้นหาคอมเม้น</h1>
     <!-- Main Form -->
     <div class="login-form-1">
-        <form name="frmMain" class="text-left" method="POST">
+        <form name="frmMain" class="text-left" action="testdb.php" method="POST">
             <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
             <div id="divResult" align="center"></div>
             <div class="main-login-form">
                 <div class="login-group">
                     <div class="form-group">
                         <label for="host" class="sr-only">Host</label>
-                        <input type="text" class="form-control css-require" name="txtHost" id="txtHost" placeholder="host">
+                        <input type="text" class="form-control css-require" name="txtHost" id="txtHost" placeholder="Host" value="<?php echo $_SESSION['Shost']; ?>">
                     </div>
                     <div class="form-group">
                         <label for="lg_username" class="sr-only">Username</label>
-                        <input type="text" class="form-control" name="txtUsername" id="txtUsername" placeholder="username">
+                        <input type="text" class="form-control" name="txtUsername" id="txtUsername" placeholder="Username" value="<?php echo $_SESSION['Suser']; ?>">
                     </div>
                     <div class="form-group">
                         <label for="lg_password" class="sr-only">Password</label>
-                        <input type="password" class="form-control" name="txtPassword" id="txtPassword" placeholder="password">
+                        <input type="password" class="form-control" name="txtPassword" id="txtPassword" placeholder="Password" value="<?php echo $_SESSION['Spass']; ?>">
                     </div>
                     <div class="form-group">
                         <label for="database" class="sr-only">DataBase</label>
-                        <input type="text" class="form-control" name="txtDatabase" id="txtDatabase" placeholder="database">
+                        <input type="text" class="form-control" name="txtDatabase" id="txtDatabase" placeholder="Database" value="<?php echo $_SESSION['Sdatabase']; ?>">
                     </div>
                     <div class="form-group" style="text-align: center; margin-top: 20px;">
-                        <button type="submit" name="btTest" OnClick="fncBTTest()" class="btn btn-primary" style="width: 30%; font-size: 20px;">Test Host</button>
-                        <button type="submit" name="btNext" OnClick="fncBTNext()" class="btn btn-success" style="width: 30%; font-size: 20px;">Next >></button>
+                        <input type="submit" name="btTest" id="btTest" value="TestHost" class="btn btn-primary" style="width: 30%; font-size: 20px;">
+                        <input type="submit" name="btNext" id="btNext" value="Next" class="btn btn-success" style="width: 30%; font-size: 20px;">
+
                     </div>
                 </div>
             </div>
