@@ -42,10 +42,13 @@ $detail_list = new detail();
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
 <?php
+
+$dbname = $_GET['db_name'];
 $tbName = $_GET['tb_name'];
 $tb_comment = $_GET['tb_comment'];
 $list = $detail_list->getDetailList($db); // ข้อมูลตาราง
-$table_list = $detail_list->getTableList($db,$tbName,$tb_comment);
+$table_list = $detail_list->getTableList($db,$tbName);
+$title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
 
 //echo '<pre>';print_r($tb_comment);echo '</pre>';
 ?>
@@ -57,8 +60,14 @@ $table_list = $detail_list->getTableList($db,$tbName,$tb_comment);
                 Table Name : <?php echo $tb_name; ?><br>
                 <form class="form-inline">
                     <div class="form-group">
-                        Comment : <input type="text" class="form-control editComment" id="editComment"
-                                         style="margin: auto; display: inline-block; font-size: 20px;" value="<?php echo $tb_comment; ?>">
+                        Comment : <input type="text" class="form-control editComment" id="editComment" name="editComment"
+                                         style="margin: auto; display: inline-block; font-size: 20px;" value="<?php
+                        if (!isset($_GET['db_name'])){
+                            echo $title_comment[0]['tb_comment'];
+                        }else{
+                            echo $title_comment[0]['tb_comment'];
+                        }
+                         ?>">
                         <button type="button" class="btn btn-success"
                                 onclick="detail_edit('update','<?= $tb_name ?>','<?= $tb_comment?>')"
                         >แก้ไข</button>
@@ -83,7 +92,12 @@ $table_list = $detail_list->getTableList($db,$tbName,$tb_comment);
                         <tr class="odd gradeX">
                             <td style="vertical-align: middle;"><?php echo $val['db_name']; ?></td>
                             <td style="vertical-align: middle;"><?php echo $val['tb_name']; ?></td>
-                            <td style="vertical-align: middle;"><?php echo $val['tb_comment']; ?></td>
+                            <td style="vertical-align: middle;">
+                                <div class="row">
+                                    <div class="col-md-10"><?php echo $val['tb_comment']; ?></div>
+                                    <div class="col-md-2"><a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reply" title="เลือกคอมเม้นนี้"></i></a></div>
+                                </div>
+                                 </td>
                         </tr>
                         <?php
                     }

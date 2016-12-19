@@ -78,7 +78,7 @@ $list = $detail_list->getDetailList($db); // ข้อมูลตาราง
                             <td style="vertical-align: middle;"><?php echo $val['tb_name']; ?></td>
                             <td style="vertical-align: middle;"><?php echo $val['tb_comment']; ?></td>
                             <td style="vertical-align: middle;" align="center">
-                                <a href="table_comment.php?tb_name=<?php echo $val['tb_name']; ?>&tb_comment=<?php echo $val['tb_comment']; ?>"><i class="fa fa-plus-square"></i></a></td>
+                                <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-plus-square"></i></a></td>
                         </tr>
                             <?php
                         }
