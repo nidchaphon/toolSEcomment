@@ -122,22 +122,22 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
 </script>
 
 <script>
-//    function detail_edit(mode,TBName,TBComment){
-//        var tb_name = '<?//=$_GET['tb_name']?>//';
-//        var tb_comment = '<?//=$_GET['tb_comment']?>//';
-//
-//        var sent = "ajax.edit_comment.php?mode="+mode+"&tb_name="+TBName+"&tb_comment="+TBComment;
-//        console.log(mode);
-//        $.ajax({
-//            dataType: "POST",
-//            url: sent,
-//            success: function (data, textStatus){
-//                console.log();
-//                $("#id_detail_1").html(data);
-//            }
-//        });
-//
-//    }
+    function detail_edit(TBName,TBComment){
+        var tb_name = '<?=$_GET['tb_name']?>';
+        var tb_comment = '<?=$_GET['tb_comment']?>';
+
+        var sent = "ajax.edit_comment.php?tb_name="+TBName+"&tb_comment="+TBComment;
+        console.log(sent);
+        $.ajax({
+            dataType: "POST",
+            url: sent,
+            success: function (data, textStatus){
+                console.log();
+                $("#id_detail_1").html(data);
+            }
+        });
+
+    }
 </script>
 
 
