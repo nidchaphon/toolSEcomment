@@ -57,11 +57,9 @@ $table_list = $detail_list->getTableList($db,$tbName,$tb_comment);
                 Table Name : <?php echo $tb_name; ?><br>
                 <form class="form-inline">
                     <div class="form-group">
-                        Comment : <input type="text" class="form-control editComment" id="editComment"
+                        Comment : <input type="text" class="form-control editComment" id="editComment" name="editComment"
                                          style="margin: auto; display: inline-block; font-size: 20px;" value="<?php echo $tb_comment; ?>">
-                        <button type="button" class="btn btn-success"
-                                onclick="detail_edit('update','<?= $tb_name ?>','<?= $tb_comment?>')"
-                        >·°È‰¢</button>
+                        <button type="button" class="btn btn-success" onclick="detail_edit('<?= $tb_name ?>','<?= $tb_comment?>')">·°È‰¢</button>
                     </div>
                 </form>
             </div>
@@ -108,22 +106,22 @@ $table_list = $detail_list->getTableList($db,$tbName,$tb_comment);
 </script>
 
 <script>
-//    function detail_edit(mode,TBName,TBComment){
-//        var tb_name = '<?//=$_GET['tb_name']?>//';
-//        var tb_comment = '<?//=$_GET['tb_comment']?>//';
-//
-//        var sent = "ajax.edit_comment.php?mode="+mode+"&tb_name="+TBName+"&tb_comment="+TBComment;
-//        console.log(mode);
-//        $.ajax({
-//            dataType: "POST",
-//            url: sent,
-//            success: function (data, textStatus){
-//                console.log();
-//                $("#id_detail_1").html(data);
-//            }
-//        });
-//
-//    }
+    function detail_edit(TBName,TBComment){
+        var tb_name = '<?=$_GET['tb_name']?>';
+        var tb_comment = '<?=$_GET['tb_comment']?>';
+
+        var sent = "ajax.edit_comment.php?tb_name="+TBName+"&tb_comment="+TBComment;
+        console.log(sent);
+        $.ajax({
+            dataType: "POST",
+            url: sent,
+            success: function (data, textStatus){
+                console.log();
+                $("#id_detail_1").html(data);
+            }
+        });
+
+    }
 </script>
 
 
