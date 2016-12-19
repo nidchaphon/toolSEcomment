@@ -61,13 +61,7 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
                 <form class="form-inline">
                     <div class="form-group">
                         Comment : <input type="text" class="form-control editComment" id="editComment" name="editComment"
-                                         style="margin: auto; display: inline-block; font-size: 20px;" value="<?php
-                        if (!isset($_GET['db_name'])){
-                            echo $title_comment[0]['tb_comment'];
-                        }else{
-                            echo $title_comment[0]['tb_comment'];
-                        }
-                         ?>">
+                                         style="margin: auto; display: inline-block; font-size: 20px;" value="<?php echo $title_comment[0]['tb_comment']; ?>">
                         <button type="button" class="btn btn-success"
                                 onclick="detail_edit('update','<?= $tb_name ?>','<?= $tb_comment?>')"
                         >·°È‰¢</button>
