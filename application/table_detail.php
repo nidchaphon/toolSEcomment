@@ -81,7 +81,6 @@ $list = $detail_list->getDetailList($db); // ข้อมูลตาราง
                                 <a href="table_comment.php?tb_name=<?php echo $val['tb_name']; ?>&tb_comment=<?php echo $val['tb_comment']; ?>"><i class="fa fa-plus-square"></i></a></td>
                         </tr>
                             <?php
-
                         }
                         ?>
                         </tbody>

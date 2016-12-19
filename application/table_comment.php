@@ -25,10 +25,11 @@ $detail_list = new detail();
     <title>Tool comment</title>
     <link rel="stylesheet" href="../common/css/style.css">
     <link rel="stylesheet" href="../common/css/style_menu.css">
-    <link rel="stylesheet" href="../common/bootstrap/css/bootstrap.min.css">
     <link href="../common/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
     <link href="../common/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
     <link href="../common/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../common/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../common/css/sweetalert.css">
     <link rel="stylesheet" href="../common/css/style_tool.css">
 
     <script src="../common/js/jquery1.12.4.js" type="text/javascript"></script>
@@ -58,33 +59,10 @@ $table_list = $detail_list->getTableList($db,$tbName,$tb_comment);
                     <div class="form-group">
                         Comment : <input type="text" class="form-control editComment" id="editComment"
                                          style="margin: auto; display: inline-block; font-size: 20px;" value="<?php echo $tb_comment; ?>">
-                        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#myModal"
-                                >·°È‰¢</button>
-                        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                            Launch Demo Modal
-                        </button>
+                        <button type="button" class="btn btn-success"
+                                onclick="detail_edit('update','<?= $tb_name ?>','<?= $tb_comment?>')"
+                        >·°È‰¢</button>
                     </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                                </div>
-                                <div class="modal-body">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                    </div>
-                    <!-- /.modal -->
                 </form>
             </div>
             <!-- /.panel-heading -->
@@ -127,10 +105,27 @@ $table_list = $detail_list->getTableList($db,$tbName,$tb_comment);
             responsive: true
         });
     });
-
-    $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-    })
 </script>
+
+<script>
+//    function detail_edit(mode,TBName,TBComment){
+//        var tb_name = '<?//=$_GET['tb_name']?>//';
+//        var tb_comment = '<?//=$_GET['tb_comment']?>//';
+//
+//        var sent = "ajax.edit_comment.php?mode="+mode+"&tb_name="+TBName+"&tb_comment="+TBComment;
+//        console.log(mode);
+//        $.ajax({
+//            dataType: "POST",
+//            url: sent,
+//            success: function (data, textStatus){
+//                console.log();
+//                $("#id_detail_1").html(data);
+//            }
+//        });
+//
+//    }
+</script>
+
+
 </body>
 </html>

@@ -18,7 +18,7 @@ class detail
             echo "<pre>"; print_r($strQuery); echo "</pre>";
         }
 
-        $resultQuery = mysql_db_query(information_schema,$strQuery);
+        $resultQuery = mysql_db_query($db,$strQuery);
         while ($row = mysql_fetch_assoc($resultQuery)){
             $result[] = $row;
         }

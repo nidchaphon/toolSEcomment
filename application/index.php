@@ -94,7 +94,7 @@ if (isset($_POST['btNext'])) {
 <body>
 
 <div class="text-center" style="padding:50px 0">
-    <h1 style="font-weight: bold; font-size: 30px" >ค้นหาคอมเม้น</h1>
+    <h1 style="font-weight: bold; font-size: 30px !important;" >ค้นหาคอมเม้น</h1>
     <!-- Main Form -->
     <div class="login-form-1">
         <form name="frmMain" class="text-left" method="POST">
