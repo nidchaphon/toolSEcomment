@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+$host =  $_SESSION["Shost"];
+$user = $_SESSION["Suser"];
+$pass = $_SESSION["Spass"];
+$db = $_SESSION["Sdatabase"];
+
 include ("../config/config.inc.php");
 
 // ดึงข้อมูลหน้าหลัก
@@ -36,30 +41,51 @@ $detail_list = new detail();
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
 <?php
-$list = $detail_list->getDetailList($_SESSION); // ข้อมูลตาราง
-//echo '<pre>';print_r($list);echo '</pre>';
+$tbName = $_GET['tb_name'];
+$tb_comment = $_GET['tb_comment'];
+$list = $detail_list->getDetailList($db); // ข้อมูลตาราง
+$table_list = $detail_list->getTableList($db,$tbName,$tb_comment);
+
+//echo '<pre>';print_r($tb_comment);echo '</pre>';
 ?>
 <body>
-<style>
-    *{
-        font-size: 20px;
-        font-family: 'THSarabunNew', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-</style>
-
-<script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-    });
-</script>
-
 <div class="row" style="margin: 15px;">
     <div class="col-lg-12" style="padding: 0 0 0 0;">
         <div class="panel panel-default">
             <div class="panel-heading" style="font-size: 24px; text-align: center; font-weight: bold">
-                Data Tables
+                Table Name : <?php echo $tb_name; ?><br>
+                <form class="form-inline">
+                    <div class="form-group">
+                        Comment : <input type="text" class="form-control editComment" id="editComment"
+                                         style="margin: auto; display: inline-block; font-size: 20px;" value="<?php echo $tb_comment; ?>">
+                        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#myModal"
+                                >แก้ไข</button>
+                        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            Launch Demo Modal
+                        </button>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+                </form>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -67,19 +93,19 @@ $list = $detail_list->getDetailList($_SESSION); // ข้อมูลตาราง
                        style="width: 80%; margin: auto;">
                     <thead>
                     <tr>
-                        <th style="width: 30%">ฐานข้อมูล</th>
-                        <th style="width: 30%">ตาราง</th>
+                        <th style="width: 20%">ฐานข้อมูล</th>
+                        <th style="width: 20%">ตาราง</th>
                         <th style="width: 40%">คอมเม้น</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
-                    foreach ($list as $val){
+                    foreach ($table_list as $val){
                         ?>
                         <tr class="odd gradeX">
-                            <td style="vertical-align: middle;"><?php echo $val['TABLE_SCHEMA'] ?></td>
-                            <td style="vertical-align: middle;"><?php echo $val['TABLE_NAME'] ?></td>
-                            <td style="vertical-align: middle;"><?php echo $val['TABLE_COMMENT'] ?></td>
+                            <td style="vertical-align: middle;"><?php echo $val['db_name']; ?></td>
+                            <td style="vertical-align: middle;"><?php echo $val['tb_name']; ?></td>
+                            <td style="vertical-align: middle;"><?php echo $val['tb_comment']; ?></td>
                         </tr>
                         <?php
                     }
@@ -94,5 +120,17 @@ $list = $detail_list->getDetailList($_SESSION); // ข้อมูลตาราง
     </div>
     <!-- /.col-lg-12 -->
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    })
+</script>
 </body>
 </html>

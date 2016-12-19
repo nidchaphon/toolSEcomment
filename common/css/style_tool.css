@@ -5,6 +5,9 @@
     table, input.search{
         width: 100% !important;
     }
+    .editComment{
+        width: 80% !important;
+    }
 }
 @media (min-width: 992px) {
     .login-form-1 {
@@ -12,6 +15,9 @@
     }
     table, input.search{
         width: 80% !important;
+    }
+    .editComment{
+        width: 400px !important;
     }
 }
 @media (min-width: 1200px) {
@@ -21,18 +27,26 @@
     table, input.search{
         width: 80% !important;
     }
+    .editComment{
+        width: 400px !important;
+    }
 }
 /**************************************** style หน้า table_detail *******************************************/
 
 .table-hover>tbody>tr:hover{
-    background-color: #ebfbff !important;
+    background-color: #ffff00 !important;
 }
 
 thead>tr>td{
     font-weight: bold;
 }
+
 /************************************* style หน้า indek *********************************************************/
 /*=== 1. General Structure ===*/
+*{
+    font-size: 20px;
+    font-family: 'THSarabunNew', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
 html,
 body {
     background: #eeeeee;
@@ -152,4 +166,6 @@ label.form-invalid:after {
 .login-form-main-message.error {
     border-left-color: #e74c3c;
 }
+
+
 

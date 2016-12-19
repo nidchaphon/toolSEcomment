@@ -5,6 +5,9 @@ ini_set('display_errors', 0);
 
 session_start();
 
+//session_destroy();
+//include ("../config/config.inc.php");
+
 $strHost = $_POST['txtHost'];
 $strUser = $_POST['txtUsername'];
 $strPass = $_POST['txtPassword'];
@@ -20,14 +23,13 @@ $connect = mysql_connect($strHost,$strUser,$strPass);
 $select_db = mysql_select_db($strDatabase,$connect);
 
 if (isset($_POST['btNext'])) {
-		if ($connect && $select_db) {
-			$frmAction = $_SERVER['PHP_SELF'];
-            header("location: table_detail.php");
-		} else {
-			$frmAction = "testdb.php";
-            $iframe = "frmMain.target='iframe_target';";
-		}
-		mysql_close($connect);
+    if ($connect && $select_db) {
+        $frmAction = $_SERVER['PHP_SELF'];
+        header("location:table_detail.php");
+    } else {
+        $frmAction = "testdb.php";
+        $iframe = "frmMain.target='iframe_target';";
+    }
 }
 
 ?>
@@ -106,15 +108,15 @@ if (isset($_POST['btNext'])) {
                     </div>
                     <div class="form-group">
                         <label for="lg_username" class="sr-only">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="username">
+                        <input type="text" class="form-control" name="txtUsername" id="txtUsername" placeholder="username">
                     </div>
                     <div class="form-group">
                         <label for="lg_password" class="sr-only">Password</label>
-                        <input type="text" class="form-control" id="password" name="password" placeholder="password">
+                        <input type="password" class="form-control" name="txtPassword" id="txtPassword" placeholder="password">
                     </div>
                     <div class="form-group">
                         <label for="database" class="sr-only">DataBase</label>
-                        <input type="text" class="form-control" id="database" name="database" placeholder="database">
+                        <input type="text" class="form-control" name="txtDatabase" id="txtDatabase" placeholder="database">
                     </div>
                     <div class="form-group" style="text-align: center; margin-top: 20px;">
                         <button type="submit" name="btTest" OnClick="fncBTTest()" class="btn btn-primary" style="width: 30%; font-size: 20px;">Test Host</button>
