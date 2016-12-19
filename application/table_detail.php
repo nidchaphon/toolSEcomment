@@ -1,15 +1,10 @@
 <?php
 session_start();
 
-echo $_SESSION["Shost"];
-echo $_SESSION["Suser"];
-echo $_SESSION["Spass"];
-echo $_SESSION["Sdatabase"];
-
 $host =  $_SESSION["Shost"];
 $user = $_SESSION["Suser"];
 $pass = $_SESSION["Spass"];
-$database = $_SESSION["Sdatabase"];
+$db = $_SESSION["Sdatabase"];
 
 include ("../config/config.inc.php");
 
@@ -46,7 +41,7 @@ $detail_list = new detail();
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
 <?php
-$list = $detail_list->getDetailList($database); // ข้อมูลตาราง
+$list = $detail_list->getDetailList($db); // ข้อมูลตาราง
 //echo '<pre>';print_r($list);echo '</pre>';
 ?>
 <body>
@@ -77,23 +72,31 @@ $list = $detail_list->getDetailList($database); // ข้อมูลตาราง
                     style="width: 80%; margin: auto;">
                         <thead>
                         <tr>
-                            <th style="width: 30%">ฐานข้อมูล</th>
-                            <th style="width: 30%">ตาราง</th>
-                            <th style="width: 10%">เลือก</th>
+                            <th style="width: 20%">ฐานข้อมูล</th>
+                            <th style="width: 20%">ตาราง</th>
+                            <th style="width: 40%">คอมเม้น</th>
+                            <th style="width: 10%">เพิ่มคอมเม้น</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
                         foreach ($list as $val){
+
+                            if ($val['tb_comment'] == '') {
+                                $trStyle = "background: #FF9797";
+                            }else {
+                                $trStyle = "";
+                            }
                             ?>
-                        <tr class="odd gradeX">
-                            <td style="vertical-align: middle;"><?php echo $val['TABLE_SCHEMA'] ?></td>
-                            <td style="vertical-align: middle;"><?php echo $val['TABLE_NAME'] ?></td>
+                        <tr class="odd gradeX" style="<?php echo $trStyle; ?>">
+                            <td style="vertical-align: middle;"><?php echo $val['db_name']; ?></td>
+                            <td style="vertical-align: middle;"><?php echo $val['tb_name']; ?></td>
+                            <td style="vertical-align: middle;"><?php echo $val['tb_comment']; ?></td>
                             <td style="vertical-align: middle;" align="center">
-                                <input type="checkbox" id="inlineCheckbox" value="option">
-                            </td>
+                                <i class="fa fa-plus-square"></i></td>
                         </tr>
                             <?php
+
                         }
                         ?>
                         </tbody>

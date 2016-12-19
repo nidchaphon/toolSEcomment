@@ -2,16 +2,19 @@
 
 class detail
 {
-    function getDetailList($database){
+    function getDetailList($db){
         $result = array();
-        $strQuery = "
-            SELECT
-                *
-            FROM
-              $database
-        ";
+        $strQuery = "SELECT
+                        information_schema.`TABLES`.TABLE_SCHEMA AS db_name,
+                        information_schema.`TABLES`.TABLE_NAME AS tb_name,
+                        information_schema.`TABLES`.TABLE_COMMENT AS tb_comment
+                    FROM
+                        information_schema.`TABLES`
+                    WHERE
+                        `TABLES`.TABLE_SCHEMA = '{$db}'
+                    ";
         if($_GET['debug']=='on'){
-            echo '‡∏Ñ‡∏¥‡∏ß‡∏£‡∏µ‡πà getDetailList ‡∏£‡∏≤‡∏¢‡∏ä‡∏∑‡πà‡∏≠‡∏ï‡∏≤‡∏£‡∏≤‡∏á‡πÉ‡∏ô‡∏ê‡∏≤‡∏ô‡∏Ç‡πâ‡∏≠‡∏°‡∏π‡∏•';
+            echo '§‘«√’ getDetailList · ¥ß√“¬°“√µ“√“ß∑’Ë‰¡Ë¡’§Õ¡‡¡Èπ';
             echo "<pre>"; print_r($strQuery); echo "</pre>";
         }
 
