@@ -41,6 +41,10 @@ thead>tr>td{
     font-weight: bold;
 }
 
+h1{
+    font-size: 30px !important;
+}
+
 /************************************* style หน้า indek *********************************************************/
 /*=== 1. General Structure ===*/
 *{

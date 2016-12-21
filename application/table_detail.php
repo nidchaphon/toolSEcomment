@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include ("../config/config.inc.php");
+
 $host =  $_SESSION["Shost"];
 $user = $_SESSION["Suser"];
 $pass = $_SESSION["Spass"];
@@ -14,15 +16,27 @@ if (isset($_POST['selectdb'])){
     $db = $_SESSION["Sdatabase"];
 }
 
-include ("../config/config.inc.php");
+if (!isset($_POST['list_tb'])){
+    $listby = "list_all";
+}else{
+    $listby = $_POST['list_tb'];
+}
 
+if ($listby == 'list_all'){
+    $checkRadio1 = "checked";
+}elseif ($listby == 'list_comment'){
+    $checkRadio2 = "checked";
+}elseif ($listby == 'list_nocomment'){
+    $checkRadio3 = "checked";
+}
 // ดึงข้อมูลหน้าหลัก
 include ("../common/class.detail.php");
 $detail_list = new detail();
 
-$list = $detail_list->getDetailList($db); // ข้อมูลตาราง
+$tb_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
 $db_list = $detail_list->getDatabaseList($db);
 
+echo $listby;
 ?>
 
 <!DOCTYPE html>
@@ -36,19 +50,19 @@ $db_list = $detail_list->getDatabaseList($db);
     <title>Tool comment</title>
     <link rel="stylesheet" href="../common/css/style.css">
     <link rel="stylesheet" href="../common/css/style_menu.css">
-    <link rel="stylesheet" href="../common/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../common/bootstrap/css/bootstrap.css">
     <link href="../common/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
     <link href="../common/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
     <link href="../common/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../common/css/style_tool.css">
 
     <script src="../common/js/jquery1.12.4.js" type="text/javascript"></script>
-    <script src="../common/bootstrap/js/bootstrap.min.js" type="text/javascript"> </script>
+    <script src="../common/bootstrap/js/bootstrap.js" type="text/javascript"> </script>
     <script src="../common/js/purl.js"></script>
-    <script src="../common/vendor/jquery/jquery.min.js"></script>
-    <script src="../common/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../common/vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="../common/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../common/vendor/jquery/jquery.js"></script>
+    <script src="../common/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="../common/vendor/datatables/js/jquery.dataTables.js"></script>
+    <script src="../common/vendor/datatables-plugins/dataTables.bootstrap.js"></script>
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
 
@@ -66,7 +80,10 @@ $db_list = $detail_list->getDatabaseList($db);
                                 <?php foreach ($db_list AS $listdb){ ?>
                                 <option value="<?php echo $listdb['db_name']; ?>"><?php echo $listdb['db_name']; ?></option>
                                 <?php } ?>
-                            </select>
+                            </select>&nbsp;
+                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbAll" value="list_all" onclick='this.form.submit()' <?php echo $checkRadio1; ?> > ทั้งหมด &nbsp;
+                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbCommnet" value="list_comment" onclick='this.form.submit()' <?php echo $checkRadio2; ?> > มีคอมเม้น &nbsp;
+                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbNoComment" value="list_nocomment" onclick='this.form.submit()' <?php echo $checkRadio3; ?> > ไม่มีคอมเม้น
                             </form>
                         </div>
                     </div>
@@ -86,7 +103,7 @@ $db_list = $detail_list->getDatabaseList($db);
                         </thead>
                         <tbody>
                         <?php
-                        foreach ($list as $val){
+                        foreach ($tb_list as $val){
                             if ($val['tb_comment'] == '') {
                                 $trStyle = "background: #FF9797";
                             }else {

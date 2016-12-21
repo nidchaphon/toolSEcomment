@@ -12,7 +12,7 @@ require_once("../config/config.inc.php"); #อ้างหาค่า Define
 
 include ("../common/class.detail.php");
 $detail_list = new detail();
-$list = $detail_list->getDetailList($db);
+$list = $detail_list->getDetailTablelList($db);
 
 function encode_items($array, $in, $out)
 {
