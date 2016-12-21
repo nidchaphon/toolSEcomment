@@ -12,6 +12,13 @@ include ("../config/config.inc.php");
 include ("../common/class.detail.php");
 $detail_list = new detail();
 
+$dbname = $_GET['db_name'];
+$tbName = $_GET['tb_name'];
+$list = $detail_list->getDetailList($db); // ข้อมูลตาราง
+$table_list = $detail_list->getTableList($db,$tbName);
+$title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
+
+//echo '<pre>';print_r($tb_comment);echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -41,32 +48,26 @@ $detail_list = new detail();
     <script src="../common/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
-<?php
 
-$dbname = $_GET['db_name'];
-$tbName = $_GET['tb_name'];
-$tb_comment = $_GET['tb_comment'];
-$list = $detail_list->getDetailList($db); // ข้อมูลตาราง
-$table_list = $detail_list->getTableList($db,$tbName);
-$title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
-
-//echo '<pre>';print_r($tb_comment);echo '</pre>';
-?>
 <body>
 <div class="row" style="margin: 15px;">
     <div class="col-lg-12" style="padding: 0 0 0 0;">
         <div class="panel panel-default">
-            <div class="panel-heading" style="font-size: 24px; text-align: center; font-weight: bold">
-                Table Name : <?php echo $tb_name; ?><br>
-                <form class="form-inline">
-                    <div class="form-group">
-                        Comment : <input type="text" class="form-control editComment" id="editComment" name="editComment"
-                                         style="margin: auto; display: inline-block; font-size: 20px;" value="<?php echo $title_comment[0]['tb_comment']; ?>">
-                        <button type="button" class="btn btn-success"
-                                onclick="detail_edit('update','<?= $tb_name ?>','<?= $tb_comment?>')"
-                        >แก้ไข</button>
+            <div class="panel-heading" style="font-size: 24px; font-weight: bold">
+                <div class="row">
+                    <div class="col-md-2"><a href="table_detail.php"><button type="button" class="btn btn-info">รายการตาราง</button></a></div>
+                    <div class="col-md-2" style="text-align: right">Table Name :<br>Comment :</div>
+                    <div class="col-md-8">
+                         <?php echo $tb_name; ?><br>
+                        <form class="form-inline" name="frmUpdateComment" action="update_comment_to_db.php?tb_name=<?php echo $tbName; ?>" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control editComment" id="txtComment" name="txtComment" value="<?php echo $title_comment[0]['tb_comment']; ?>" style="margin: auto; display: inline-block; font-size: 20px;" >
+                                <button type="submit" name="update_comment" class="btn btn-success">แก้ไข</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -114,26 +115,6 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
         });
     });
 </script>
-
-<script>
-    function detail_edit(TBName,TBComment){
-        var tb_name = '<?=$_GET['tb_name']?>';
-        var tb_comment = '<?=$_GET['tb_comment']?>';
-
-        var sent = "ajax.edit_comment.php?tb_name="+TBName+"&tb_comment="+TBComment;
-        console.log(sent);
-        $.ajax({
-            dataType: "POST",
-            url: sent,
-            success: function (data, textStatus){
-                console.log();
-                $("#id_detail_1").html(data);
-            }
-        });
-
-    }
-</script>
-
 
 </body>
 </html>
