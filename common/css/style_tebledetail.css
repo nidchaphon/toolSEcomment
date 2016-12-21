@@ -1,0 +1,10 @@
+*{
+    font-family: 'THSarabunNew', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.input-sm {
+    width: 20%;
+    height: 30px;
+    padding: 5px 10px;
+    line-height: 1.5;
+    border-radius: 3px;
+}

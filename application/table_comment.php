@@ -119,24 +119,48 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
             responsive: true
         });
     });
-</script>
 
-<script>
-    function detail_edit(TBName,TBComment){
+    function edit(TBName,TBComment){
         var tb_name = '<?=$_GET['tb_name']?>';
-        var tb_comment = '<?=$_GET['tb_comment']?>';
+        var tb_comment = '<?=$title_comment[0]['tb_comment']?>';
+        swal({
+            title: "ต้องการอัพเดทคอมเม้นใช่หรือไม่",
+            type: "warning",   showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "ตกลง",
+            cancelButtonText: "ยกเลิก",
+            closeOnConfirm: false,
+            closeOnCancel: false,
+            customClass: "THsarabun"
+        }, function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    type: "GET",
+                    url :'ajax.edit_comment.php?tb_name='+TBName+'&tb_comment='+TBComment,
+                    data: {data:TBComment},
+                    success: function (data, textStatus){
+                        swal({
+                            title: "สำเร็จ!",
+                            text: "อัพเดทคอมเม้นเรียบร้อยแล้ว",
+                            type: "success",
+                            showConfirmButton: true,
+                            timer: 1000,
+                        }, function () {
+                            setTimeout(function () {
+//                                window.location = "./table_comment.php?&tb_name="+TBName+"&tb_comment="+TBComment;
+                            }, 1000);
+                        });
+                    }
+                });
+            }else{
+                swal({
+                    title: "ยกเลิกการอัพเดทคอมเม้น",
+                    type: "error",
+                    showConfirmButton: true
 
-        var sent = "ajax.edit_comment.php?tb_name="+TBName+"&tb_comment="+TBComment;
-        console.log(sent);
-        $.ajax({
-            dataType: "POST",
-            url: sent,
-            success: function (data, textStatus){
-                console.log();
-                $("#id_detail_1").html(data);
+                });
             }
         });
-
     }
 </script>
 
