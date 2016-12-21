@@ -51,6 +51,27 @@ class detail
         return $result;
     }
 
+    function getDatabaseList($db){
+        $result = array();
+        $strQuery = "SELECT
+                        information_schema.`TABLES`.TABLE_SCHEMA AS db_name
+                    FROM
+                        information_schema.`TABLES`
+                    WHERE `TABLES`.TABLE_SCHEMA != '{$db}'
+                    GROUP BY `TABLES`.TABLE_SCHEMA
+                    ";
+        if($_GET['debug']=='on'){
+            echo 'คิวรี getDatabaseList แสดงรายการฐานข้อมูล';
+            echo "<pre>"; print_r($strQuery); echo "</pre>";
+        }
+
+        $resultQuery = mysql_db_query($db,$strQuery);
+        while ($row = mysql_fetch_assoc($resultQuery)){
+            $result[] = $row;
+        }
+        return $result;
+    }
+
     function getTitleComment($db='',$database='',$table=''){
         $result = array();
         $strQuery = "SELECT
@@ -69,7 +90,6 @@ class detail
             echo 'คิวรี getTitleComment แสดงคอมเม้นที่เลือกมา';
             echo "<pre>"; print_r($strQuery); echo "</pre>";
         }
-
         $resultQuery = mysql_db_query($db,$strQuery);
         $row = mysql_fetch_assoc($resultQuery);
             $result[] = $row;

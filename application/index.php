@@ -3,10 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 
-session_start();
-
-//session_destroy();
-//include ("../config/config.inc.php");
+if ($_GET['clear_ss']=='clear'){
+    session_destroy();
+}else{
+    session_start();
+}
 
 ?>
 
@@ -31,9 +32,7 @@ session_start();
 
 
 </head>
-<style>
 
-</style>
 <body>
 
 <div class="text-center" style="padding:50px 0">

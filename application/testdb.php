@@ -36,14 +36,14 @@ if ($strHost == '') {
             echo "<script language='javascript'> alert('เชื่อมต่อฐานข้อมูลสำเร็จ'); </script>";
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
         } else {
-            echo "<script language='javascript'> alert('ไม่สามารถเชื่อมต่อฐานข้อมูลได้ !!!'); </script>";
+            echo "<script language='javascript'> alert('ไม่สามารถเชื่อมต่อฐานข้อมูลได้ !!! กรุณาตรวจสอบข้อมูลอีกครั้ง'); </script>";
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
         }
     } elseif (isset($_POST['btNext'])) {
         if ($connect && $select_db) {
             header("Location:table_detail.php");
         } else {
-            echo "<script language='javascript'> alert('ไม่สามารถเชื่อมต่อฐานข้อมูลได้ !!!'); </script>";
+            echo "<script language='javascript'> alert('ไม่สามารถเชื่อมต่อฐานข้อมูลได้ !!! กรุณาตรวจสอบข้อมูลอีกครั้ง'); </script>";
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
         }
     }

@@ -4,13 +4,24 @@ session_start();
 $host =  $_SESSION["Shost"];
 $user = $_SESSION["Suser"];
 $pass = $_SESSION["Spass"];
-$db = $_SESSION["Sdatabase"];
+//$db = $_SESSION["Sdatabase"];
+
+if (isset($_POST['selectdb'])){
+    $db = $_POST['selectdb'];
+    unset($_SESSION["Sdatabase"]);
+    $_SESSION["Sdatabase"] = $db;
+}else{
+    $db = $_SESSION["Sdatabase"];
+}
 
 include ("../config/config.inc.php");
 
 // ดึงข้อมูลหน้าหลัก
 include ("../common/class.detail.php");
 $detail_list = new detail();
+
+$list = $detail_list->getDetailList($db); // ข้อมูลตาราง
+$db_list = $detail_list->getDatabaseList($db);
 
 ?>
 
@@ -40,16 +51,26 @@ $detail_list = new detail();
     <script src="../common/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
-<?php
-$list = $detail_list->getDetailList($db); // ข้อมูลตาราง
-//echo '<pre>';print_r($list);echo '</pre>';
-?>
+
 <body>
     <div class="row" style="margin: 15px;">
         <div class="col-lg-12" style="padding: 0 0 0 0;">
             <div class="panel panel-default">
                 <div class="panel-heading" style="font-size: 24px; text-align: center; font-weight: bold">
-                    Data Tables
+                    <div class="row">
+                        <div class="col-md-1"><a href="index.php?clear_ss=clear"><button type="button" class="btn btn-info">ตั้งค่าใหม่</button></a></div>
+                        <div class="col-md-11">Table List Database :
+                            <form action="table_detail.php" method="post">
+                            <select class="select" name="selectdb" onchange='this.form.submit()'>
+                                <option value="<?php echo $db; ?>"><?php echo $db; ?></option>
+                                <?php foreach ($db_list AS $listdb){ ?>
+                                <option value="<?php echo $listdb['db_name']; ?>"><?php echo $listdb['db_name']; ?></option>
+                                <?php } ?>
+                            </select>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -66,7 +87,6 @@ $list = $detail_list->getDetailList($db); // ข้อมูลตาราง
                         <tbody>
                         <?php
                         foreach ($list as $val){
-
                             if ($val['tb_comment'] == '') {
                                 $trStyle = "background: #FF9797";
                             }else {
