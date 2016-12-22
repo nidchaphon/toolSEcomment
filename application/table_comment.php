@@ -12,9 +12,13 @@ include ("../config/config.inc.php");
 include ("../common/class.detail.php");
 $detail_list = new detail();
 
-$dbname = $_GET['db_name'];
+if (!isset($_GET['db_name'])){
+    $dbname = $db;
+}else{
+    $dbname = $_GET['db_name'];
+}
+
 $tbName = $_GET['tb_name'];
-$list = $detail_list->getDetailList($db); // ข้อมูลตาราง
 $table_list = $detail_list->getTableList($db,$tbName);
 $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
 
@@ -42,9 +46,9 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
     <script src="../common/js/jquery1.12.4.js" type="text/javascript"></script>
     <script src="../common/bootstrap/js/bootstrap.min.js" type="text/javascript"> </script>
     <script src="../common/js/purl.js"></script>
-    <script src="../common/vendor/jquery/jquery.min.js"></script>
+    <script src="../common/vendor/jquery/jquery.js"></script>
     <script src="../common/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../common/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../common/vendor/datatables/js/jquery.dataTables.js"></script>
     <script src="../common/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
