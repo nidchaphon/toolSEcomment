@@ -3,7 +3,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 
-$_SESSION['count'] = 0;
+if ($_GET['clear_ss']=='clear'){
+    session_destroy();
+}else{
+    session_start();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +39,7 @@ $_SESSION['count'] = 0;
     <h1 style="font-weight: bold; font-size: 30px" >ค้นหาคอมเม้น</h1>
     <!-- Main Form -->
     <div class="login-form-1">
-        <form name="frmMain" class="text-left" action="testdb.php" method="POST">
+        <form name="frmMain" class="text-left" action="change_host_testdb.php" method="POST">
             <div id="divResult" align="center"></div>
             <div class="main-login-form">
                 <div class="login-group">
@@ -50,14 +55,9 @@ $_SESSION['count'] = 0;
                         <label for="lg_password" class="sr-only">Password</label>
                         <input type="password" class="form-control" name="txtPassword" id="txtPassword" placeholder="Password" value="<?php echo $_SESSION['Spass']; ?>">
                     </div>
-                    <div class="form-group">
-                        <label for="database" class="sr-only">DataBase</label>
-                        <input type="text" class="form-control" name="txtDatabase" id="txtDatabase" placeholder="Database" value="<?php echo $_SESSION['Sdatabase']; ?>">
-                    </div>
                     <div class="form-group" style="text-align: center; margin-top: 20px;">
                         <input type="submit" name="btTest" id="btTest" value="TestHost" class="btn btn-primary" style="width: 30%; font-size: 20px;">
                         <input type="submit" name="btNext" id="btNext" value="Next" class="btn btn-success" style="width: 30%; font-size: 20px;">
-
                     </div>
                 </div>
             </div>

@@ -5,10 +5,7 @@ class detail
 
     function getDetailTablelList($db='',$listby=''){
         $result = array();
-//
-//        if($listby == 1){
-//            $wheretblist = "";
-//        }else
+
         if ($listby == 'list_comment'){
             $wheretblist = "AND `TABLES`.TABLE_COMMENT != ''";
         }elseif ($listby == 'list_nocomment'){
@@ -107,6 +104,27 @@ class detail
         $resultQuery = mysql_db_query($db,$strQuery);
         $row = mysql_fetch_assoc($resultQuery);
             $result[] = $row;
+        return $result;
+    }
+
+    function getCountTable($db=''){
+        $result = array();
+        $strQuery = "SELECT
+                        COUNT(information_schema.`TABLES`.TABLE_NAME) AS numtball,
+                        COUNT(IF(information_schema.`TABLES`.TABLE_COMMENT != '',information_schema.`TABLES`.TABLE_NAME,NULL)) AS numtbcomment,
+                        COUNT(IF(information_schema.`TABLES`.TABLE_COMMENT = '',information_schema.`TABLES`.TABLE_NAME,NULL)) AS numtbnocomment
+                      FROM
+                        information_schema.`TABLES`
+                      WHERE
+                        `TABLES`.TABLE_SCHEMA = '{$db}'
+                    ";
+        if($_GET['debug']=='on'){
+            echo 'คิวรี getCountTable แสดงจำนวนตารางทั้งหมด/ตารางที่มีคอมเม้น/ตารางที่ไม่มีคอมเม้น';
+            echo "<pre>"; print_r($strQuery); echo "</pre>";
+        }
+        $resultQuery = mysql_db_query($db,$strQuery);
+        $row = mysql_fetch_assoc($resultQuery);
+        $result[] = $row;
         return $result;
     }
 }
