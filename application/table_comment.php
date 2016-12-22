@@ -12,7 +12,12 @@ include ("../config/config.inc.php");
 include ("../common/class.detail.php");
 $detail_list = new detail();
 
-$dbname = $_GET['db_name'];
+if (!isset($_GET['db_name'])){
+    $dbname = $db;
+}else{
+    $dbname = $_GET['db_name'];
+}
+
 $tbName = $_GET['tb_name'];
 $table_list = $detail_list->getTableList($db,$tbName);
 $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
@@ -39,12 +44,12 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
     <link rel="stylesheet" href="../common/css/style_tool.css">
 
     <script src="../common/js/jquery1.12.4.js" type="text/javascript"></script>
-    <script src="../common/bootstrap/js/bootstrap.js" type="text/javascript"> </script>
+    <script src="../common/bootstrap/js/bootstrap.min.js" type="text/javascript"> </script>
     <script src="../common/js/purl.js"></script>
     <script src="../common/vendor/jquery/jquery.js"></script>
-    <script src="../common/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="../common/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="../common/vendor/datatables/js/jquery.dataTables.js"></script>
-    <script src="../common/vendor/datatables-plugins/dataTables.bootstrap.js"></script>
+    <script src="../common/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../common/vendor/datatables-responsive/dataTables.responsive.js"></script>
 </head>
 
@@ -89,7 +94,7 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
                             <td style="vertical-align: middle;">
                                 <div class="row">
                                     <div class="col-md-10"><?php echo $val['tb_comment']; ?></div>
-                                    <div class="col-md-2"><a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reply" title="เลือกคอมเม้นนี้"></i></a></div>
+                                    <div class="col-md-1"><a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reply" title="เลือกคอมเม้นนี้"></i></a></div>
                                 </div>
                                  </td>
                         </tr>
