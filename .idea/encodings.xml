@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/application/change_host.php" charset="TIS-620" />
-    <file url="file://$PROJECT_DIR$/application/change_host_testdb.php" charset="TIS-620" />
+    <file url="file://$PROJECT_DIR$/application/ajax.edit_comment.php" charset="TIS-620" />
+    <file url="file://$PROJECT_DIR$/application/detail.php" charset="TIS-620" />
     <file url="file://$PROJECT_DIR$/application/index.php" charset="TIS-620" />
-    <file url="file://$PROJECT_DIR$/application/modaltest.php" charset="TIS-620" />
     <file url="file://$PROJECT_DIR$/application/table_comment.php" charset="TIS-620" />
     <file url="file://$PROJECT_DIR$/application/table_detail.php" charset="TIS-620" />
     <file url="file://$PROJECT_DIR$/application/testdb.php" charset="TIS-620" />
     <file url="file://$PROJECT_DIR$/application/update_comment_to_db.php" charset="TIS-620" />
     <file url="file://$PROJECT_DIR$/common/class.detail.php" charset="TIS-620" />
+    <file url="file://$PROJECT_DIR$/common/vendor/datatables/js/jquery.dataTables.js" charset="TIS-620" />
     <file url="file://$PROJECT_DIR$/config/config.inc.php" charset="TIS-620" />
   </component>
 </project>

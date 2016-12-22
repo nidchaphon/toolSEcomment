@@ -17,17 +17,13 @@ if (isset($_POST['selectdb'])){
 }
 
 if (!isset($_POST['list_tb'])){
-    if (!isset($_SESSION['listtb'])){
-        $listtb = "list_all";
-    }else{
-        $listtb = $_SESSION['listtb'];
-    }
+    $listtb = $_SESSION['listtb'];
 }else{
     $listtb = $_POST['list_tb'];
 }
 
 $_SESSION['listtb'] = $listtb;
-$listby = $_SESSION['listtb'];
+$listby = $listtb;
 
 if ($listby == 'list_all'){
     $checkRadio1 = "checked";
@@ -42,8 +38,9 @@ $detail_list = new detail();
 
 $tb_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
 $db_list = $detail_list->getDatabaseList($db);
-$count_tb = $detail_list->getCountTable($db);
+
 $comment_list = $detail_list->getTableList($db,$tbName);
+
 ?>
 
 <!DOCTYPE html>
@@ -79,22 +76,23 @@ $comment_list = $detail_list->getTableList($db,$tbName);
             <div class="panel panel-default">
                 <div class="panel-heading" style="font-size: 24px; text-align: center; font-weight: bold">
                     <div class="row">
-                        <div class="col-md-1"><a href="clear_session.php"><button type="button" class="btn btn-info">ตั้งค่าใหม่</button></a></div>
-                        <div class="col-md-9">รายการตารางในฐานข้อมูล
+                        <div class="col-md-2"><a href="index.php?clear_ss=clear"><button type="button" class="btn btn-info">ตั้งค่าใหม่</button></a></div>
+                        <div class="col-md-8 " style="padding: 0">Table List Database :
                             <form action="table_detail.php" method="post">
                             <select class="select" name="selectdb" onchange='this.form.submit()'>
                                 <option value="<?php echo $db; ?>"><?php echo $db; ?></option>
                                 <?php foreach ($db_list AS $listdb){ ?>
                                 <option value="<?php echo $listdb['db_name']; ?>"><?php echo $listdb['db_name']; ?></option>
                                 <?php } ?>
-                            </select><br>
-                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbAll" value="list_all" onclick='this.form.submit()' <?php echo $checkRadio1; ?> > ทั้งหมด <?php echo $count_tb[0]['numtball'];?> รายการ &nbsp;&nbsp;
-                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbCommnet" value="list_comment" onclick='this.form.submit()' <?php echo $checkRadio2; ?> > มีคอมเม้น <?php echo $count_tb[0]['numtbcomment'];?> รายการ &nbsp;&nbsp;
-                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbNoComment" value="list_nocomment" onclick='this.form.submit()' <?php echo $checkRadio3; ?> > ไม่มีคอมเม้น <?php echo $count_tb[0]['numtbnocomment'];?> รายการ &nbsp;&nbsp;
+                            </select>&nbsp;
+                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbAll" value="list_all" onclick='this.form.submit()' <?php echo $checkRadio1; ?> > ทั้งหมด &nbsp;
+                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbCommnet" value="list_comment" onclick='this.form.submit()' <?php echo $checkRadio2; ?> > มีคอมเม้น &nbsp;
+                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbNoComment" value="list_nocomment" onclick='this.form.submit()' <?php echo $checkRadio3; ?> > ไม่มีคอมเม้น
                             </form>
-                            <p>แก้ไขคอมเม้นแล้ว : <?php if ($_SESSION['count'] == ''){echo "0";}else{echo $_SESSION['count'];} ?> รายการ</p>
+
+                            <?php echo $_SESSION['count']; ?>
                         </div>
-<!--                        <div class="col-md-2" align="right"><a href="change_host.php?clear_ss=clear"><button type="button" class="btn btn-info">เปลี่ยน Host</button></a></div>-->
+                        <div class="col-md-2"><a href="change_host.php?clear_ss=clear"><button type="button" class="btn btn-info">เปลี่ยน Host</button></a></div>
                     </div>
 
                 </div>

@@ -94,7 +94,7 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
                             <td style="vertical-align: middle;">
                                 <div class="row">
                                     <div class="col-md-10"><?php echo $val['tb_comment']; ?></div>
-                                    <div class="col-md-2"><a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reply" title="เลือกคอมเม้นนี้"></i></a></div>
+                                    <div class="col-md-1"><a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reply" title="เลือกคอมเม้นนี้"></i></a></div>
                                 </div>
                                  </td>
                         </tr>
