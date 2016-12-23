@@ -104,10 +104,10 @@ $comment_list = $detail_list->getTableList($db,$tbName);
                     style="width: 80%; margin: auto;">
                         <thead>
                         <tr>
-                            <th style="width: 20%">ฐานข้อมูล</th>
-                            <th style="width: 20%">ตาราง</th>
-                            <th style="width: 40%">คอมเม้น</th>
-                            <th style="width: 10%">เพิ่มคอมเม้น</th>
+                            <th style="width: 20%; text-align: center">ฐานข้อมูล</th>
+                            <th style="width: 20%; text-align: center">ตาราง</th>
+                            <th style="width: 40%; text-align: center">คอมเม้น</th>
+                            <th style="width: 10%; text-align: center">จัดการ</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -123,16 +123,9 @@ $comment_list = $detail_list->getTableList($db,$tbName);
                             <td style="vertical-align: middle;"><?php echo $val['db_name']; ?></td>
                             <td style="vertical-align: middle;"><?php echo $val['tb_name']; ?></td>
                             <td style="vertical-align: middle;"><?php echo $val['tb_comment']; ?></td>
-<!--                            <td style="vertical-align: middle;">--><?php
-//                                if ($val['tb_comment'] != ''){
-//                                    echo $val['tb_comment'];
-//                                }else{
-//                                    ?>
-<!--                                    <input type="text" class="form-control" id="txtComment" name="txtComment">-->
-<!--                                --><?php //} ?><!--</td>-->
                             <td style="vertical-align: middle;" align="center">
-<!--                                <a href="#" onclick="load_data('ccaa')" data-toggle="modal" data-target=".bs-example-modal-table" ><i class="fa fa-plus-square"></i></a>-->
-                                <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-plus-square"></i></a></td>
+                                <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reorder (alias)" title="จัดการฟิลด์"></i></a> &nbsp;
+                                <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-comment" title="แก้ไขคอมเม้น"></i></a></td>
                         </tr>
                             <?php
                         }

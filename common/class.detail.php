@@ -127,5 +127,33 @@ class detail
         $result[] = $row;
         return $result;
     }
+
+    function getDetailColumnList($db='',$table=''){
+        $result = array();
+        $strQuery = "SELECT
+                        information_schema.`COLUMNS`.TABLE_SCHEMA,
+                        information_schema.`COLUMNS`.TABLE_NAME,
+                        information_schema.`COLUMNS`.COLUMN_NAME,
+                        information_schema.`COLUMNS`.COLUMN_TYPE,
+                        information_schema.`COLUMNS`.COLUMN_KEY,
+                        information_schema.`COLUMNS`.COLUMN_COMMENT
+                      FROM
+                        information_schema.`COLUMNS`
+                      WHERE
+                        `COLUMNS`.TABLE_SCHEMA = '$db'
+                        AND `COLUMNS`.TABLE_NAME = '$table'
+
+                    ";
+        if($_GET['debug']=='on'){
+            echo 'คิวรี getDetailColumnList แสดงรายการคอลัมน์จากตารางที่เลือกมา';
+            echo "<pre>"; print_r($strQuery); echo "</pre>";
+        }
+
+        $resultQuery = mysql_db_query($db,$strQuery);
+        while ($row = mysql_fetch_assoc($resultQuery)){
+            $result[] = $row;
+        }
+        return $result;
+    }
 }
 ?>
