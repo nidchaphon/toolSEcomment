@@ -123,17 +123,8 @@ $comment_list = $detail_list->getTableList($db,$tbName);
                             <td style="vertical-align: middle;"><?php echo $val['db_name']; ?></td>
                             <td style="vertical-align: middle;"><?php echo $val['tb_name']; ?></td>
                             <td style="vertical-align: middle;"><?php echo $val['tb_comment']; ?></td>
-<!--                            <td style="vertical-align: middle;">--><?php
-//                                if ($val['tb_comment'] != ''){
-//                                    echo $val['tb_comment'];
-//                                }else{
-//                                    ?>
-<!--                                    <input type="text" class="form-control" id="txtComment" name="txtComment">-->
-<!--                                --><?php //} ?><!--</td>-->
                             <td style="vertical-align: middle;" align="center">
-<!--                                <a href="#" onclick="load_data('ccaa')" data-toggle="modal" data-target=".bs-example-modal-table" ><i class="fa fa-plus-square"></i></a>-->
-
-                                <a href="table_field_detail.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reorder (alias)" title="¨Ñ´¡ÒÃ¿ÔÅ´ì"></i></a> &nbsp;
+                                <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reorder (alias)" title="¨Ñ´¡ÒÃ¿ÔÅ´ì"></i></a> &nbsp;
                                 <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-comment" title="á¡éä¢¤ÍÁàÁé¹"></i></a></td>
                         </tr>
                             <?php
