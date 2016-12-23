@@ -17,13 +17,17 @@ if (isset($_POST['selectdb'])){
 }
 
 if (!isset($_POST['list_tb'])){
-    $listtb = $_SESSION['listtb'];
+    if (!isset($_SESSION['listtb'])){
+        $listtb = "list_all";
+    }else{
+        $listtb = $_SESSION['listtb'];
+    }
 }else{
     $listtb = $_POST['list_tb'];
 }
 
 $_SESSION['listtb'] = $listtb;
-$listby = $listtb;
+$listby = $_SESSION['listtb'];
 
 if ($listby == 'list_all'){
     $checkRadio1 = "checked";
@@ -38,9 +42,8 @@ $detail_list = new detail();
 
 $tb_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
 $db_list = $detail_list->getDatabaseList($db);
-
+$count_tb = $detail_list->getCountTable($db);
 $comment_list = $detail_list->getTableList($db,$tbName);
-
 ?>
 
 <!DOCTYPE html>
@@ -76,23 +79,22 @@ $comment_list = $detail_list->getTableList($db,$tbName);
             <div class="panel panel-default">
                 <div class="panel-heading" style="font-size: 24px; text-align: center; font-weight: bold">
                     <div class="row">
-                        <div class="col-md-2"><a href="index.php?clear_ss=clear"><button type="button" class="btn btn-info">ตั้งค่าใหม่</button></a></div>
-                        <div class="col-md-8 " style="padding: 0">Table List Database :
+                        <div class="col-md-1"><a href="clear_session.php"><button type="button" class="btn btn-info">ตั้งค่าใหม่</button></a></div>
+                        <div class="col-md-9">รายการตารางในฐานข้อมูล
                             <form action="table_detail.php" method="post">
                             <select class="select" name="selectdb" onchange='this.form.submit()'>
                                 <option value="<?php echo $db; ?>"><?php echo $db; ?></option>
                                 <?php foreach ($db_list AS $listdb){ ?>
                                 <option value="<?php echo $listdb['db_name']; ?>"><?php echo $listdb['db_name']; ?></option>
                                 <?php } ?>
-                            </select>&nbsp;
-                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbAll" value="list_all" onclick='this.form.submit()' <?php echo $checkRadio1; ?> > ทั้งหมด &nbsp;
-                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbCommnet" value="list_comment" onclick='this.form.submit()' <?php echo $checkRadio2; ?> > มีคอมเม้น &nbsp;
-                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbNoComment" value="list_nocomment" onclick='this.form.submit()' <?php echo $checkRadio3; ?> > ไม่มีคอมเม้น
+                            </select><br>
+                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbAll" value="list_all" onclick='this.form.submit()' <?php echo $checkRadio1; ?> > ทั้งหมด <?php echo $count_tb[0]['numtball'];?> รายการ &nbsp;&nbsp;
+                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbCommnet" value="list_comment" onclick='this.form.submit()' <?php echo $checkRadio2; ?> > มีคอมเม้น <?php echo $count_tb[0]['numtbcomment'];?> รายการ &nbsp;&nbsp;
+                                <input type="radio" class="form-check-input" name="list_tb" id="list_tbNoComment" value="list_nocomment" onclick='this.form.submit()' <?php echo $checkRadio3; ?> > ไม่มีคอมเม้น <?php echo $count_tb[0]['numtbnocomment'];?> รายการ &nbsp;&nbsp;
                             </form>
-
-                            <?php echo $_SESSION['count']; ?>
+                            <p>แก้ไขคอมเม้นแล้ว : <?php if ($_SESSION['count'] == ''){echo "0";}else{echo $_SESSION['count'];} ?> รายการ</p>
                         </div>
-                        <div class="col-md-2"><a href="change_host.php?clear_ss=clear"><button type="button" class="btn btn-info">เปลี่ยน Host</button></a></div>
+<!--                        <div class="col-md-2" align="right"><a href="change_host.php?clear_ss=clear"><button type="button" class="btn btn-info">เปลี่ยน Host</button></a></div>-->
                     </div>
 
                 </div>
@@ -102,10 +104,10 @@ $comment_list = $detail_list->getTableList($db,$tbName);
                     style="width: 80%; margin: auto;">
                         <thead>
                         <tr>
-                            <th style="width: 20%">ฐานข้อมูล</th>
-                            <th style="width: 20%">ตาราง</th>
-                            <th style="width: 40%">คอมเม้น</th>
-                            <th style="width: 10%">เพิ่มคอมเม้น</th>
+                            <th style="width: 20%; text-align: center">ฐานข้อมูล</th>
+                            <th style="width: 20%; text-align: center">ตาราง</th>
+                            <th style="width: 40%; text-align: center">คอมเม้น</th>
+                            <th style="width: 10%; text-align: center">จัดการ</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -130,7 +132,9 @@ $comment_list = $detail_list->getTableList($db,$tbName);
 <!--                                --><?php //} ?><!--</td>-->
                             <td style="vertical-align: middle;" align="center">
 <!--                                <a href="#" onclick="load_data('ccaa')" data-toggle="modal" data-target=".bs-example-modal-table" ><i class="fa fa-plus-square"></i></a>-->
-                                <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-plus-square"></i></a></td>
+
+                                <a href="table_field_detail.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reorder (alias)" title="จัดการฟิลด์"></i></a> &nbsp;
+                                <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-comment" title="แก้ไขคอมเม้น"></i></a></td>
                         </tr>
                             <?php
                         }
