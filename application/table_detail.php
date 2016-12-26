@@ -104,7 +104,6 @@ $comment_list = $detail_list->getTableList($db,$tbName);
                     style="width: 80%; margin: auto;">
                         <thead>
                         <tr>
-                            <th style="width: 20%; text-align: center">ฐานข้อมูล</th>
                             <th style="width: 20%; text-align: center">ตาราง</th>
                             <th style="width: 40%; text-align: center">คอมเม้น</th>
                             <th style="width: 10%; text-align: center">จัดการ</th>
@@ -120,11 +119,10 @@ $comment_list = $detail_list->getTableList($db,$tbName);
                             }
                             ?>
                         <tr class="odd gradeX" style="<?php echo $trStyle; ?>">
-                            <td style="vertical-align: middle;"><?php echo $val['db_name']; ?></td>
                             <td style="vertical-align: middle;"><?php echo $val['tb_name']; ?></td>
                             <td style="vertical-align: middle;"><?php echo $val['tb_comment']; ?></td>
                             <td style="vertical-align: middle;" align="center">
-                                <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reorder (alias)" title="จัดการฟิลด์"></i></a> &nbsp;
+                                <a href="table_field_detail.php?tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reorder (alias)" title="จัดการฟิลด์"></i></a> &nbsp;
                                 <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-comment" title="แก้ไขคอมเม้น"></i></a></td>
                         </tr>
                             <?php

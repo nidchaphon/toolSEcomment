@@ -128,24 +128,108 @@ class detail
         return $result;
     }
 
-    function getDetailColumnList($db='',$table=''){
+    function getDetailFieldList($db='',$table='',$listby=''){
         $result = array();
+
+        if ($listby == 'list_comment'){
+            $wherefieldlist = "AND `COLUMNS`.COLUMN_COMMENT != ''";
+        }elseif ($listby == 'list_nocomment'){
+            $wherefieldlist = "AND `COLUMNS`.COLUMN_COMMENT = ''";
+        }else{
+            $wherefieldlist = "";
+        }
+
         $strQuery = "SELECT
-                        information_schema.`COLUMNS`.TABLE_SCHEMA,
-                        information_schema.`COLUMNS`.TABLE_NAME,
-                        information_schema.`COLUMNS`.COLUMN_NAME,
-                        information_schema.`COLUMNS`.COLUMN_TYPE,
-                        information_schema.`COLUMNS`.COLUMN_KEY,
-                        information_schema.`COLUMNS`.COLUMN_COMMENT
+                        information_schema.`COLUMNS`.TABLE_SCHEMA AS db_name,
+                        information_schema.`COLUMNS`.TABLE_NAME AS tb_name,
+                        information_schema.`COLUMNS`.COLUMN_NAME AS col_name,
+                        information_schema.`COLUMNS`.COLUMN_TYPE AS col_type,
+                        information_schema.`COLUMNS`.COLUMN_KEY AS col_key,
+                        information_schema.`COLUMNS`.COLUMN_COMMENT AS col_comment
                       FROM
                         information_schema.`COLUMNS`
                       WHERE
-                        `COLUMNS`.TABLE_SCHEMA = '$db'
-                        AND `COLUMNS`.TABLE_NAME = '$table'
+                        `COLUMNS`.TABLE_SCHEMA = '{$db}'
+                        AND `COLUMNS`.TABLE_NAME = '{$table}'
+                        {$wherefieldlist}
 
                     ";
         if($_GET['debug']=='on'){
-            echo 'คิวรี getDetailColumnList แสดงรายการคอลัมน์จากตารางที่เลือกมา';
+            echo 'คิวรี getDetailFieldList แสดงรายการฟิลด์จากตารางที่เลือกมา';
+            echo "<pre>"; print_r($strQuery); echo "</pre>";
+        }
+
+        $resultQuery = mysql_db_query($db,$strQuery);
+        while ($row = mysql_fetch_assoc($resultQuery)){
+            $result[] = $row;
+        }
+        return $result;
+    }
+
+    function getCountField($db='',$table=''){
+        $result = array();
+        $strQuery = "SELECT
+                        COUNT(information_schema.`COLUMNS`.TABLE_NAME) AS numfieldall,
+                        COUNT(IF(information_schema.`COLUMNS`.COLUMN_COMMENT != '',information_schema.`COLUMNS`.TABLE_NAME,NULL)) AS numfieldcomment,
+                        COUNT(IF(information_schema.`COLUMNS`.COLUMN_COMMENT = '',information_schema.`COLUMNS`.TABLE_NAME,NULL)) AS numfieldnocomment
+                      FROM
+                        information_schema.`COLUMNS`
+                      WHERE
+                        `COLUMNS`.TABLE_SCHEMA = '{$db}'
+                        AND `COLUMNS`.TABLE_NAME = '{$table}'
+                    ";
+        if($_GET['debug']=='on'){
+            echo 'คิวรี getCountField แสดงจำนวนฟิลด์ทั้งหมด/ฟิลด์ที่มีคอมเม้น/ฟิลด์ที่ไม่มีคอมเม้น';
+            echo "<pre>"; print_r($strQuery); echo "</pre>";
+        }
+        $resultQuery = mysql_db_query($db,$strQuery);
+        $row = mysql_fetch_assoc($resultQuery);
+        $result[] = $row;
+        return $result;
+    }
+
+    function getFieldTitleComment($dbname='',$tbName='',$colName=''){
+        $strQuery = "SELECT
+                        information_schema.`COLUMNS`.TABLE_SCHEMA AS db_name,
+                        information_schema.`COLUMNS`.TABLE_NAME AS tb_name,
+                        information_schema.`COLUMNS`.COLUMN_COMMENT AS col_comment
+                      FROM
+                        information_schema.`COLUMNS`
+                      WHERE
+                        `COLUMNS`.TABLE_SCHEMA = '{$dbname}'
+                        AND `COLUMNS`.TABLE_NAME = '{$tbName}'
+                        AND `COLUMNS`.COLUMN_NAME = '{$colName}'
+
+                    ";
+        if($_GET['debug']=='on'){
+            echo 'คิวรี getFieldTitleComment แสดงคอมเม้นที่เลือกมา';
+            echo "<pre>"; print_r($strQuery); echo "</pre>";
+        }
+        $resultQuery = mysql_db_query($dbname,$strQuery);
+        $row = mysql_fetch_assoc($resultQuery);
+        $result = $row;
+        return $result;
+    }
+
+    function getFieldList($db='',$colName=''){
+        $result = array();
+
+        $strQuery = "SELECT
+                        information_schema.`COLUMNS`.TABLE_SCHEMA AS db_name,
+                        information_schema.`COLUMNS`.TABLE_NAME AS tb_name,
+                        information_schema.`COLUMNS`.COLUMN_NAME AS col_name,
+                        information_schema.`COLUMNS`.COLUMN_TYPE AS col_type,
+                        information_schema.`COLUMNS`.COLUMN_KEY AS col_key,
+                        information_schema.`COLUMNS`.COLUMN_COMMENT AS col_comment
+                      FROM
+                        information_schema.`COLUMNS`
+                      WHERE
+                        `COLUMNS`.COLUMN_COMMENT != '' 
+                        AND `COLUMNS`.COLUMN_NAME = '{$colName}'
+
+                    ";
+        if($_GET['debug']=='on'){
+            echo 'คิวรี getFieldList แสดงรายการฟิล์ที่มีคอมเม้น';
             echo "<pre>"; print_r($strQuery); echo "</pre>";
         }
 

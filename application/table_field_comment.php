@@ -8,7 +8,6 @@ $db = $_SESSION["Sdatabase"];
 
 include ("../config/config.inc.php");
 
-// ดึงข้อมูลหน้าหลัก
 include ("../common/class.detail.php");
 $detail_list = new detail();
 
@@ -18,11 +17,19 @@ if (!isset($_GET['db_name'])){
     $dbname = $_GET['db_name'];
 }
 
-$tbName = $_GET['tb_name'];
-$table_list = $detail_list->getTableList($db,$tbName);
-$title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
+if (!isset($_GET['col_name'])){
+    $colName = $_SESSION['col_name'];
+}else {
+    $colName = $_GET['col_name'];
+    $_SESSION['col_name'] = $_GET['col_name'];
+}
 
-//echo '<pre>';print_r($tb_comment);echo '</pre>';
+$tbName = $_GET['tb_name'];
+$field_list = $detail_list->getFieldList($db,$colName);
+$title_comment = $detail_list->getFieldTitleComment($dbname,$tbName,$colName);
+
+//echo '<pre>';print_r($title_comment);echo '</pre>';
+
 ?>
 
 <!DOCTYPE html>
@@ -59,14 +66,14 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
         <div class="panel panel-default">
             <div class="panel-heading" style="font-size: 24px; font-weight: bold">
                 <div class="row">
-                    <div class="col-md-2"><a href="table_detail.php"><button type="button" class="btn btn-info">รายการตาราง</button></a></div>
-                    <div class="col-md-2" style="text-align: right">Table Name :<br>Comment :</div>
+                    <div class="col-md-2"><a href="table_field_detail.php"><button type="button" class="btn btn-info">รายการฟิลด์</button></a></div>
+                    <div class="col-md-2" style="text-align: right">Field Name :<br>Comment :</div>
                     <div class="col-md-8">
-                         <?php echo $tb_name; ?><br>
-                        <form class="form-inline" name="frmUpdateComment" action="update_comment_to_db.php?tb_name=<?php echo $tbName; ?>" method="post">
+                        <?php echo $colName; ?><br>
+                        <form class="form-inline" name="frmUpdateComment" action="update_comment_to_db.php?tb_name=<?php echo $colName; ?>" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control editComment" id="txtComment" name="txtComment" value="<?php echo $title_comment[0]['tb_comment']; ?>" style="margin: auto; display: inline-block; font-size: 20px;" >
-                                <button type="submit" name="update_comment" class="btn btn-success">แก้ไข</button>
+                                <input type="text" class="form-control editComment" id="txtComment" name="txtComment" value="<?php echo $title_comment['col_comment']; ?>" style="margin: auto; display: inline-block; font-size: 20px;" >
+                                <button type="submit" name="update_comment_field" class="btn btn-success">แก้ไข</button>
                             </div>
                         </form>
                     </div>
@@ -79,22 +86,24 @@ $title_comment = $detail_list->getTitleComment($db,$dbname,$tbName);
                        style="width: 80%; margin: auto;">
                     <thead>
                     <tr>
-                        <th style="width: 20%; text-align: center">ฐานข้อมูล</th>
-                        <th style="width: 40%; text-align: center">คอมเม้น</th>
+                        <th style="width: 20%">ฐานข้อมูล</th>
+                        <th style="width: 20%">ตาราง</th>
+                        <th style="width: 40%">คอมเม้น</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
-                    foreach ($table_list as $val){
+                    foreach ($field_list as $val){
                         ?>
                         <tr class="odd gradeX">
                             <td style="vertical-align: middle;"><?php echo $val['db_name']; ?></td>
+                            <td style="vertical-align: middle;"><?php echo $val['tb_name']; ?></td>
                             <td style="vertical-align: middle;">
                                 <div class="row">
-                                    <div class="col-md-10"><?php echo $val['tb_comment']; ?></div>
-                                    <div class="col-md-1"><a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reply" title="เลือกคอมเม้นนี้"></i></a></div>
+                                    <div class="col-md-10"><?php echo $val['col_comment']; ?></div>
+                                    <div class="col-md-1"><a href="table_field_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reply" title="เพิ่มคอมเม้นนี้"></i></a></div>
                                 </div>
-                                 </td>
+                            </td>
                         </tr>
                         <?php
                     }
