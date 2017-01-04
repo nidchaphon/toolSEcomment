@@ -46,7 +46,7 @@ class detail
                         WHERE
                         `TABLES`.TABLE_COMMENT != ''
                         AND `TABLES`.TABLE_NAME = '{$tbName}'
-
+                        AND `TABLES`.TABLE_SCHEMA != '{$db}'
                     ";
         if($_GET['debug']=='on'){
             echo 'คิวรี getComment แสดงรายการตารางที่มีคอมเม้น';

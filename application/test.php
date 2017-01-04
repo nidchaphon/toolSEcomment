@@ -134,3 +134,4 @@ $fruit_array = array_unique($fruit_array);
 // ใช้คำสั่ง print_r() แสดงค่าจำนวน Array ที่เหลือออกมา
 print_r($fruit_array);
 ?>
+

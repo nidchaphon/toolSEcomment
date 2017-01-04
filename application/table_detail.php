@@ -45,6 +45,20 @@ $count_tb = $detail_list->getCountTable($db);
 $table_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
 
 //echo '<pre>';print_r($comment_list);echo '</pre>';
+
+if ($_GET['Action'] == 'update'){
+    for ($i = 1; $i <= $_POST["hdnLine"]; $i++) {
+        if ($_POST["txtComment$i"] != ''){
+            $txttbname = $_POST["txtTBname$i"];
+            $txtcomment = $_POST["txtComment$i"];
+            $sqlUpdate = "ALTER TABLE $txttbname COMMENT '$txtcomment' ";
+            mysql_query($sqlUpdate) or die(mysql_error());
+            header("location:table_detail.php");
+            $_SESSION['count'] = $_SESSION['count'] + 1;
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -101,9 +115,9 @@ $table_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
 
                 </div>
                 <!-- /.panel-heading -->
-                <form name="form_updatecomment" action="" method="post">
+                <form name="form_updatecomment" action="table_detail.php?Action=update" method="post">
                 <div class="panel-body">
-                    <div class="row" align="center"><button type="submit" class="btn btn-success" style="width: 200px;">Update</button></div><br>
+                    <div class="row" align="center"><button type="submit" name="update_comment" class="btn btn-success" style="width: 200px;">Update</button></div><br>
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example"
                     style="width: 80%; margin: auto;">
                         <thead>
@@ -115,30 +129,37 @@ $table_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
                         </thead>
                         <tbody>
                         <?php
-
+                        $i=0;
                         foreach ($table_list AS $key => $val_tb){
+                            $i = $i + 1;
                             $tbName = $val_tb['tb_name'];
                             $comment_list = $detail_list->getComment($db,$tbName);
 //                            echo '<pre>';print_r($comment_list);echo '</pre>';
                             $count_cm =  count($comment_list);
                             echo $count_cm;
+                            foreach ($comment_list AS $val_cm){
+                                echo $val_cm['tb_comment'];
+                            }
+
 
                             if ($val_tb['tb_comment'] == '') {
                                 $trStyle = "background: #FF9797";
                                 if ($count_cm > 1){
-
-                                    $comment = "<input type='text' class='form-control editComment' id='txtComment' name='txtComment' value='" . $comment_list[0]['tb_comment'] . "'>
-                                                &nbsp;<i class='fa fa-reorder (alias)' title='เลือกคอมเม้น'></i>";
+                                    $comment = "<input type='text' class='form-control editComment' id='txtComment' name='txtComment".$i."' value='" . $comment_list[0]['tb_comment'] . "'>
+                                                &nbsp;
+                                                 <a href='' onclick='load_data('".$val_tb['tb_name']."')' data-toggle='modal' data-target='.bs-example-modal-table' >
+                                                 <i class='fa fa-reorder (alias)' title='เลือกคอมเม้น'></i></a>";
                                 }else{
-                                    $comment = "<input type='text' class='form-control editComment' id='txtComment' name='txtComment' placeholder='ไม่พบคอมเม้นในฐานข้อมูลอื่น' value='" . $comment_list[0]['tb_comment'] . "'>";
+                                    $comment = "<input type='text' class='form-control editComment' id='txtComment' name='txtComment".$i."' placeholder='ไม่พบคอมเม้นในฐานข้อมูลอื่น' value='" . $comment_list[0]['tb_comment'] . "'>";
                                 }
                             }else {
                                 $trStyle = "";
-                                $comment = $val_tb['tb_comment'];
+                                $comment = "<input type='hidden' id='txtComment' name='hdnComment".$i."' value='" . $val_tb['tb_comment'] . "'>".$val_tb['tb_comment'];
                             }
                             ?>
                         <tr class="odd gradeX" style="<?php echo $trStyle; ?>">
-                            <td style="vertical-align: middle;"><?php echo $val_tb['tb_name']; ?></td>
+                            <td style="vertical-align: middle;"><?php echo $val_tb['tb_name']; ?>
+                                <input type="hidden" name="txtTBname<?php echo $i;?>" value="<?php echo $val_tb['tb_name'];?>"></td>
                             <td style="vertical-align: middle;"><?php echo $comment;  ?></td>
                             <td style="vertical-align: middle;" align="center">
 <!--                                <a href="table_field_detail.php?tb_name=--><?php //echo $val['tb_name']; ?><!--"><i class="fa fa-reorder (alias)" title="จัดการฟิลด์"></i></a> &nbsp;-->
@@ -149,7 +170,7 @@ $table_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
                         ?>
                         </tbody>
                     </table>
-
+                    <input type="hidden" name="hdnLine" value="<?php echo $i;?>">
                     <!-- /.table-responsive -->
                 </div>
                 <!-- /.panel-body -->
@@ -159,6 +180,42 @@ $table_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
         </div>
         <!-- /.col-lg-12 -->
     </div>
+
+
+<!--    <a href="" onclick="load_data('id ของพนักงาน')" data-toggle="modal" data-target=".bs-example-modal-table" >-->
+        /////// modal</a>
+        <div class="modal fade bs-example-modal-table" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h4 class="modal-title">ข้อมูลการลาทั้งหมด</h4>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body no-padding">
+                            <div class="table-responsive" style="height:500px;">
+                                <div id="divDataview">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <script type="text/javascript">
+            function load_data($val_tb['tb_name']) {
+                var sdata = {
+                    id: $val_tb['tb_name']
+                };
+                $('#divDataview').load('url ไปที่หน้าสร้าง ไว้สำหรับ select ข้อมูลนั้นเช่น ข้อมูลบุคคล.php', sdata);
+            }
+        </script>
+
 
     <script>
         $(document).ready(function() {
