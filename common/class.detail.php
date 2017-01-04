@@ -19,13 +19,37 @@ class detail
                         information_schema.`TABLES`.TABLE_NAME AS tb_name,
                         information_schema.`TABLES`.TABLE_COMMENT AS tb_comment
                     FROM
-                        information_schema.`TABLES`
+                        information_schema.`TABLES` 
                     WHERE
                         `TABLES`.TABLE_SCHEMA = '{$db}'
                         {$wheretblist}
                     ";
         if($_GET['debug']=='on'){
             echo 'คิวรี getDetailList แสดงรายการตาราง - คอมเม้น';
+            echo "<pre>"; print_r($strQuery); echo "</pre>";
+        }
+
+        $resultQuery = mysql_db_query($db,$strQuery);
+        while ($row = mysql_fetch_assoc($resultQuery)){
+            $result[] = $row;
+        }
+        return $result;
+    }
+
+    function getComment($db='',$tbName=''){
+        $result = array();
+        $strQuery = "SELECT
+                        
+                        information_schema.`TABLES`.TABLE_COMMENT AS tb_comment
+                        FROM
+                        information_schema.`TABLES`
+                        WHERE
+                        `TABLES`.TABLE_COMMENT != ''
+                        AND `TABLES`.TABLE_NAME = '{$tbName}'
+
+                    ";
+        if($_GET['debug']=='on'){
+            echo 'คิวรี getComment แสดงรายการตารางที่มีคอมเม้น';
             echo "<pre>"; print_r($strQuery); echo "</pre>";
         }
 

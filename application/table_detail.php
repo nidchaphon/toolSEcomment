@@ -40,10 +40,11 @@ if ($listby == 'list_all'){
 include ("../common/class.detail.php");
 $detail_list = new detail();
 
-$tb_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
 $db_list = $detail_list->getDatabaseList($db);
 $count_tb = $detail_list->getCountTable($db);
-$comment_list = $detail_list->getTableList($db,$tbName);
+$table_list = $detail_list->getDetailTablelList($db,$listby); // ข้อมูลตาราง
+
+//echo '<pre>';print_r($comment_list);echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -80,8 +81,9 @@ $comment_list = $detail_list->getTableList($db,$tbName);
                 <div class="panel-heading" style="font-size: 24px; text-align: center; font-weight: bold">
                     <div class="row">
                         <div class="col-md-1"><a href="clear_session.php"><button type="button" class="btn btn-info">ตั้งค่าใหม่</button></a></div>
-                        <div class="col-md-9">รายการตารางในฐานข้อมูล
-                            <form action="table_detail.php" method="post">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-6">รายการตารางในฐานข้อมูล
+                            <form name="form_listdb" action="table_detail.php" method="post">
                             <select class="select" name="selectdb" onchange='this.form.submit()'>
                                 <option value="<?php echo $db; ?>"><?php echo $db; ?></option>
                                 <?php foreach ($db_list AS $listdb){ ?>
@@ -94,12 +96,14 @@ $comment_list = $detail_list->getTableList($db,$tbName);
                             </form>
                             <p>แก้ไขคอมเม้นแล้ว : <?php if ($_SESSION['count'] == ''){echo "0";}else{echo $_SESSION['count'];} ?> รายการ</p>
                         </div>
-<!--                        <div class="col-md-2" align="right"><a href="change_host.php?clear_ss=clear"><button type="button" class="btn btn-info">เปลี่ยน Host</button></a></div>-->
+
                     </div>
 
                 </div>
                 <!-- /.panel-heading -->
+                <form name="form_updatecomment" action="" method="post">
                 <div class="panel-body">
+                    <div class="row" align="center"><button type="submit" class="btn btn-success" style="width: 200px;">Update</button></div><br>
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example"
                     style="width: 80%; margin: auto;">
                         <thead>
@@ -111,28 +115,45 @@ $comment_list = $detail_list->getTableList($db,$tbName);
                         </thead>
                         <tbody>
                         <?php
-                        foreach ($tb_list as $val){
-                            if ($val['tb_comment'] == '') {
+
+                        foreach ($table_list AS $key => $val_tb){
+                            $tbName = $val_tb['tb_name'];
+                            $comment_list = $detail_list->getComment($db,$tbName);
+//                            echo '<pre>';print_r($comment_list);echo '</pre>';
+                            $count_cm =  count($comment_list);
+                            echo $count_cm;
+
+                            if ($val_tb['tb_comment'] == '') {
                                 $trStyle = "background: #FF9797";
+                                if ($count_cm > 1){
+
+                                    $comment = "<input type='text' class='form-control editComment' id='txtComment' name='txtComment' value='" . $comment_list[0]['tb_comment'] . "'>
+                                                &nbsp;<i class='fa fa-reorder (alias)' title='เลือกคอมเม้น'></i>";
+                                }else{
+                                    $comment = "<input type='text' class='form-control editComment' id='txtComment' name='txtComment' placeholder='ไม่พบคอมเม้นในฐานข้อมูลอื่น' value='" . $comment_list[0]['tb_comment'] . "'>";
+                                }
                             }else {
                                 $trStyle = "";
+                                $comment = $val_tb['tb_comment'];
                             }
                             ?>
                         <tr class="odd gradeX" style="<?php echo $trStyle; ?>">
-                            <td style="vertical-align: middle;"><?php echo $val['tb_name']; ?></td>
-                            <td style="vertical-align: middle;"><?php echo $val['tb_comment']; ?></td>
+                            <td style="vertical-align: middle;"><?php echo $val_tb['tb_name']; ?></td>
+                            <td style="vertical-align: middle;"><?php echo $comment;  ?></td>
                             <td style="vertical-align: middle;" align="center">
-                                <a href="table_field_detail.php?tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-reorder (alias)" title="จัดการฟิลด์"></i></a> &nbsp;
-                                <a href="table_comment.php?db_name=<?php echo $val['db_name']; ?>&tb_name=<?php echo $val['tb_name']; ?>"><i class="fa fa-comment" title="แก้ไขคอมเม้น"></i></a></td>
+<!--                                <a href="table_field_detail.php?tb_name=--><?php //echo $val['tb_name']; ?><!--"><i class="fa fa-reorder (alias)" title="จัดการฟิลด์"></i></a> &nbsp;-->
+                                <a href="table_comment.php?db_name=<?php echo $val_tb['db_name']; ?>&tb_name=<?php echo $val_tb['tb_name']; ?>"><i class="fa fa-comment" title="แก้ไขคอมเม้น"></i></a></td>
                         </tr>
                             <?php
                         }
                         ?>
                         </tbody>
                     </table>
-<!--                     /.table-responsive -->
+
+                    <!-- /.table-responsive -->
                 </div>
                 <!-- /.panel-body -->
+                </form>
             </div>
             <!-- /.panel -->
         </div>
